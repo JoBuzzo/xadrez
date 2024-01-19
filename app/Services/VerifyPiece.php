@@ -20,6 +20,9 @@ class VerifyPiece
             case strstr($piece, 'bispo'):
                 $result = new Bishop;
                 return $result($board, $position, $piece);
+            case strstr($piece, 'rainha'):
+                $result = new Queen;
+                return $result($board, $position, $piece);
             default:
                 return [];
         }
