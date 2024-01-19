@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Xadrez;
+use App\Livewire\GameChess;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', Xadrez::class);
+Route::get('/', GameChess::class);

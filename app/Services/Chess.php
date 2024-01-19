@@ -48,16 +48,16 @@ class Chess
             } elseif ($i == 1) { //cavalo
                 $this->board['b1'] = $this->pieces['brancas'][$i];
                 $this->board['g1'] = $this->pieces['brancas'][$i];
-            }elseif($i == 2){ //bispo
+            } elseif ($i == 2) { //bispo
                 $this->board['c1'] = $this->pieces['brancas'][$i];
                 $this->board['f1'] = $this->pieces['brancas'][$i];
-            }elseif($i == 3){ // rei
+            } elseif ($i == 3) { // rei
                 $this->board['e1'] = $this->pieces['brancas'][$i];
-            }elseif($i == 4){ // rainha
+            } elseif ($i == 4) { // rainha
                 $this->board['d1'] = $this->pieces['brancas'][$i];
-            }else {
-                for($n = 0; $n <= count($this->abc) - 1; $n++) {
-                    $this->board[$this->abc[$n].'2'] = $this->pieces['brancas'][$i];
+            } else {
+                for ($n = 0; $n <= count($this->abc) - 1; $n++) {
+                    $this->board[$this->abc[$n] . '2'] = $this->pieces['brancas'][$i];
                 }
             }
         }
@@ -69,18 +69,41 @@ class Chess
             } elseif ($i == 1) { //cavalo
                 $this->board['b8'] = $this->pieces['pretas'][$i];
                 $this->board['g8'] = $this->pieces['pretas'][$i];
-            }elseif($i == 2){ //bispo
+            } elseif ($i == 2) { //bispo
                 $this->board['c8'] = $this->pieces['pretas'][$i];
                 $this->board['f8'] = $this->pieces['pretas'][$i];
-            }elseif($i == 3){ // rei
+            } elseif ($i == 3) { // rei
                 $this->board['e8'] = $this->pieces['pretas'][$i];
-            }elseif($i == 4){ // rainha
+            } elseif ($i == 4) { // rainha
                 $this->board['d8'] = $this->pieces['pretas'][$i];
-            }else {
-                for($n = 0; $n <= count($this->abc) - 1; $n++) {
-                    $this->board[$this->abc[$n].'7'] = $this->pieces['pretas'][$i];
+            } else {
+                for ($n = 0; $n <= count($this->abc) - 1; $n++) {
+                    $this->board[$this->abc[$n] . '7'] = $this->pieces['pretas'][$i];
                 }
             }
         }
+    }
+
+    public static function PieceIsWhite($piece)
+    {
+        return strstr($piece, 'branco');
+    }
+
+    public static function PieceIsBlack($piece)
+    {
+        return strstr($piece, 'preta');
+    }
+
+    public static function PieceIsBlackOrWhite($piece)
+    {
+        return strstr($piece, 'branco') || strstr($piece, 'preta');
+    }
+
+
+    //verifica se tem uma peça da mesma cor aonde na casa selecionada, caso não ter a peça é mexida
+    public static function canCaptureOwnPiece($piece, $selectedPiece)
+    {
+        return (!strstr($piece, 'branco') && strstr($selectedPiece, 'branco'))
+            || (!strstr($piece, 'preta') && strstr($selectedPiece, 'preta'));
     }
 }
