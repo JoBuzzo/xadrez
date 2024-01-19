@@ -106,4 +106,12 @@ class Chess
         return (!strstr($piece, 'branco') && strstr($selectedPiece, 'branco'))
             || (!strstr($piece, 'preta') && strstr($selectedPiece, 'preta'));
     }
+
+    public static function PiecesAreOfDifferentColors($piece, $secoundPiece)
+    {
+        return (Chess::PieceIsWhite($piece) &&
+            Chess::PieceIsBlack($secoundPiece)
+            || Chess::PieceIsBlack($piece) &&
+            Chess::PieceIsWhite($secoundPiece));
+    }
 }

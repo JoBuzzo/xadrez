@@ -14,7 +14,10 @@ class VerifyPiece
             case strstr($piece, 'torre'):
                 $result = new Tower;
                 return $result($board, $position, $piece);
-                default:
+            case strstr($piece, 'cavalo'):
+                $result = new Horse;
+                return $result($board, $position, $piece);
+            default:
                 return [];
         }
     }

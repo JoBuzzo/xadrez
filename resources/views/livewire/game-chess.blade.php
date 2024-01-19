@@ -12,7 +12,6 @@
         @endfor
     </div>
 
-
     <div class="flex flex-col">
         <div class="transform rotate-[-90deg] w-[600px] h-[600px] ">
             @foreach ($board as $key => $box)
