@@ -23,6 +23,9 @@ class VerifyPiece
             case strstr($piece, 'rainha'):
                 $result = new Queen;
                 return $result($board, $position, $piece);
+            case strstr($piece, 'rei'):
+                $result = new King;
+                return $result($board, $position, $piece);
             default:
                 return [];
         }
