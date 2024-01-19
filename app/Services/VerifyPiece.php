@@ -11,11 +11,11 @@ class VerifyPiece
             case strstr($piece, 'peao'):
                 $result = new Pawn;
                 return $result($board, $position, $piece);
-                break;
             case strstr($piece, 'torre'):
                 $result = new Tower;
                 return $result($board, $position, $piece);
-                break;
+                default:
+                return [];
         }
     }
 }

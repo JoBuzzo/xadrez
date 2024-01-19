@@ -12,20 +12,13 @@ class Tower
 
         $index = array_search($letter, $this->abc);
 
-        if($index == 0){
-            $index++;
-        }
-
-        if($index == 7){
-            $index--;
-        }
         
         $return = [];
 
         if (Chess::PieceIsWhite($piece)) {
             //verificar os espaços a esquerda apartir da posição da peça
             for ($i = $index - 1; $i >= 0; $i--) {
-                if (isset($board[$this->abc[$i] . $number])) {
+                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
                     if (Chess::PieceIsWhite($board[$this->abc[$i] . $number])) {
                         break;
                     }
@@ -39,7 +32,7 @@ class Tower
 
             //verificar os espaços a direita apartir da posição da peça
             for ($i = $index + 1; $i <= 7; $i++) {
-                if (isset($board[$this->abc[$i] . $number])) {
+                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
                     if (Chess::PieceIsWhite($board[$this->abc[$i] . $number])) {
                         break;
                     }
@@ -80,7 +73,7 @@ class Tower
         if (Chess::PieceIsBlack($piece)) {
             //verificar os espaços a esquerda apartir da posição da peça
             for ($i = $index + 1; $i >= 0; $i--) {
-                if (isset($board[$this->abc[$i] . $number])) {
+                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
                     if (Chess::PieceIsBlack($board[$this->abc[$i] . $number])) {
                         break;
                     }
@@ -94,7 +87,7 @@ class Tower
 
             //verificar os espaços a direita apartir da posição da peça
             for ($i = $index + 1; $i <= 7; $i++) {
-                if (isset($board[$this->abc[$i] . $number])) {
+                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
                     if (Chess::PieceIsBlack($board[$this->abc[$i] . $number])) {
                         break;
                     }
