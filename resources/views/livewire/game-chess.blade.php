@@ -1,7 +1,7 @@
 <div class="flex mt-10 bg-[#fbf5de] select-none">
     @php
         $num = 0;
-        $colors = ['bg-[#4f3011]', 'bg-[#fbf5de]'];
+        $colors = ['bg-black/80', 'bg-[#fbf5de]'];
     @endphp
 
     <div>
