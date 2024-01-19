@@ -34,6 +34,16 @@ class GameChess extends Component
     public $select = true;
 
     /**
+     * Vez
+     * true: peças brancas
+     * false: peças pretas
+     *
+     * @var boolean
+     */
+    public $turn = true;
+
+
+    /**
      * exemplo: ['position'] => a1
      * exemplo: ['piece'] => peao_branco
      *
@@ -45,7 +55,8 @@ class GameChess extends Component
     public function move($position, $piece)
     {
         if ($this->select) {
-            if (Chess::PieceIsBlackOrWhite($piece)) {
+
+            if ($this->turn && Chess::PieceIsWhite($piece) || !$this->turn && Chess::PieceIsBlack($piece)) {
                 $this->selectedPiece = [
                     'position' => $position,
                     'piece' => $piece
@@ -54,10 +65,13 @@ class GameChess extends Component
                 //verifica que tipo de peça foi selecionada e mostra quais casas é possível de movimentar a peça selecionada
                 $this->possibilities = VerifyPiece::verify($this->board, $position, $piece);
             }
+
+
         } else {
             if (in_array($position, $this->possibilities)) {
                 $this->board[$this->selectedPiece['position']] = $this->selectedPiece['position'];
                 $this->board[$position] = $this->selectedPiece['piece'];
+                $this->turn = ! $this->turn;
             }
             $this->selectedPiece = [];
             $this->possibilities = [];
