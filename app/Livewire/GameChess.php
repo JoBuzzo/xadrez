@@ -4,10 +4,12 @@ namespace App\Livewire;
 
 use App\Services\Chess;
 use App\Services\VerifyPiece;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class GameChess extends Component
 {
+    #[Title("Xadrez")]
     public function render()
     {
         return view('livewire.game-chess');
@@ -52,6 +54,7 @@ class GameChess extends Component
     public array $selectedPiece;
     public array $possibilities;
 
+    public bool $modal = false;
     public function move($position, $piece)
     {
         if ($this->select) {
@@ -65,17 +68,51 @@ class GameChess extends Component
                 //verifica que tipo de peça foi selecionada e mostra quais casas é possível de movimentar a peça selecionada
                 $this->possibilities = VerifyPiece::verify($this->board, $position, $piece);
             }
-
-
         } else {
+
+
+
+
             if (in_array($position, $this->possibilities)) {
                 $this->board[$this->selectedPiece['position']] = $this->selectedPiece['position'];
                 $this->board[$position] = $this->selectedPiece['piece'];
-                $this->turn = ! $this->turn;
+
+                /**
+                 * Se o peão chegar no fim do tabuleiro, aparecer as outras peças para substitui-lo
+                 */
+                if (
+                    strstr($this->selectedPiece['piece'], 'peao') &&
+                    (strstr($position, '8') == '8' || strstr($position, '1') == '1')
+                ) {
+                    //abrir modal de escolher a peça
+                    $this->replacePosition = $position;
+                    $this->modal = true;
+                } else {
+                    $this->turn = !$this->turn;
+                }
             }
+
+
             $this->selectedPiece = [];
             $this->possibilities = [];
             $this->select = true;
+        }
+    }
+
+
+    /**
+     * Variavel responsável por salvar a posição em que o peão está
+     */
+    public $replacePosition;
+
+    public function replacePawn($piece)
+    {
+        if ($piece == 'rainha' || $piece == 'torre' || $piece == 'bispo' || $piece == 'cavalo') {
+            $color = $this->turn ? 'branco' : 'preta';
+            $this->board[$this->replacePosition] = $piece . '_' . $color;
+            $this->modal = false;
+            $this->turn = !$this->turn;
+            $this->replacePosition = null;
         }
     }
 }
