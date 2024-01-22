@@ -2,14 +2,13 @@
 
 namespace App\Services;
 
-class Queen
+class Queen extends Piece
 {
-    public $abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-    public function __invoke($board, $position, $piece)
+    public static function possibleMoves($board, $position, $piece): array
     {
         [$letter, $number] = str_split($position, 1);
-        $index = array_search($letter, $this->abc);
+        $index = array_search($letter, parent::$abc);
         $return = [];
 
 
@@ -21,12 +20,12 @@ class Queen
         $j = $number;
         for ($i = $index + 1; $i <= 7; $i++) {
             $j++;
-            if (isset($board[$this->abc[$i] . $j])) {
-                if ($board[$this->abc[$i] . $j] == $this->abc[$i] . $j) {
-                    $return[] = $this->abc[$i] . $j;
+            if (isset($board[parent::$abc[$i] . $j])) {
+                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
+                    $return[] = parent::$abc[$i] . $j;
                 } else {
-                    if (Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$i] . $j])) {
-                        $return[] = $this->abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
+                        $return[] = parent::$abc[$i] . $j;
                     }
                     break;
                 }
@@ -40,12 +39,12 @@ class Queen
         $j = $number;
         for ($i = $index - 1; $i >= 0; $i--) {
             $j++;
-            if (isset($board[$this->abc[$i] . $j])) {
-                if ($board[$this->abc[$i] . $j] == $this->abc[$i] . $j) {
-                    $return[] = $this->abc[$i] . $j;
+            if (isset($board[parent::$abc[$i] . $j])) {
+                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
+                    $return[] = parent::$abc[$i] . $j;
                 } else {
-                    if (Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$i] . $j])) {
-                        $return[] = $this->abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
+                        $return[] = parent::$abc[$i] . $j;
                     }
                     break;
                 }
@@ -59,12 +58,12 @@ class Queen
         $j = $number;
         for ($i = $index - 1; $i >= 0; $i--) {
             $j--;
-            if (isset($board[$this->abc[$i] . $j])) {
-                if ($board[$this->abc[$i] . $j] == $this->abc[$i] . $j) {
-                    $return[] = $this->abc[$i] . $j;
+            if (isset($board[parent::$abc[$i] . $j])) {
+                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
+                    $return[] = parent::$abc[$i] . $j;
                 } else {
-                    if (Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$i] . $j])) {
-                        $return[] = $this->abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
+                        $return[] = parent::$abc[$i] . $j;
                     }
                     break;
                 }
@@ -78,27 +77,27 @@ class Queen
         $j = $number;
         for ($i = $index + 1; $i <= 7; $i++) {
             $j--;
-            if (isset($board[$this->abc[$i] . $j])) {
-                if ($board[$this->abc[$i] . $j] == $this->abc[$i] . $j) {
-                    $return[] = $this->abc[$i] . $j;
+            if (isset($board[parent::$abc[$i] . $j])) {
+                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
+                    $return[] = parent::$abc[$i] . $j;
                 } else {
-                    if (Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$i] . $j])) {
-                        $return[] = $this->abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
+                        $return[] = parent::$abc[$i] . $j;
                     }
                     break;
                 }
             }
         }
 
-        if (Chess::PieceIsWhite($piece)) {
+        if (parent::pieceIsWhite($piece)) {
             //verificar os espaços a esquerda apartir da posição da peça
             for ($i = $index - 1; $i >= 0; $i--) {
-                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
-                    if (Chess::PieceIsWhite($board[$this->abc[$i] . $number])) {
+                if (isset(parent::$abc[$i]) && isset($board[parent::$abc[$i] . $number])) {
+                    if (parent::pieceIsWhite($board[parent::$abc[$i] . $number])) {
                         break;
                     }
-                    $return[] = $this->abc[$i] . $number;
-                    if (Chess::PieceIsBlack($board[$this->abc[$i] . $number])) {
+                    $return[] = parent::$abc[$i] . $number;
+                    if (parent::pieceIsBlack($board[parent::$abc[$i] . $number])) {
                         break;
                     }
                 }
@@ -107,12 +106,12 @@ class Queen
 
             //verificar os espaços a direita apartir da posição da peça
             for ($i = $index + 1; $i <= 7; $i++) {
-                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
-                    if (Chess::PieceIsWhite($board[$this->abc[$i] . $number])) {
+                if (isset(parent::$abc[$i]) && isset($board[parent::$abc[$i] . $number])) {
+                    if (parent::pieceIsWhite($board[parent::$abc[$i] . $number])) {
                         break;
                     }
-                    $return[] = $this->abc[$i] . $number;
-                    if (Chess::PieceIsBlack($board[$this->abc[$i] . $number])) {
+                    $return[] = parent::$abc[$i] . $number;
+                    if (parent::pieceIsBlack($board[parent::$abc[$i] . $number])) {
                         break;
                     }
                 }
@@ -121,11 +120,11 @@ class Queen
             //verificar os espaços em baixo apartir da posição da peça
             for ($i = $number - 1; $i >= 1; $i--) {
                 if (isset($board[$letter . $i])) {
-                    if (Chess::PieceIsWhite($board[$letter . $i])) {
+                    if (parent::pieceIsWhite($board[$letter . $i])) {
                         break;
                     }
                     $return[] = $letter . $i;
-                    if (Chess::PieceIsBlack($board[$letter . $i])) {
+                    if (parent::pieceIsBlack($board[$letter . $i])) {
                         break;
                     }
                 }
@@ -134,26 +133,26 @@ class Queen
             //verificar os espaços em cima apartir da posição da peça
             for ($i = $number + 1; $i <= 8; $i++) {
                 if (isset($board[$letter . $i])) {
-                    if (Chess::PieceIsWhite($board[$letter . $i])) {
+                    if (parent::pieceIsWhite($board[$letter . $i])) {
                         break;
                     }
                     $return[] = $letter . $i;
-                    if (Chess::PieceIsBlack($board[$letter . $i])) {
+                    if (parent::pieceIsBlack($board[$letter . $i])) {
                         break;
                     }
                 }
             }
         }
 
-        if (Chess::PieceIsBlack($piece)) {
+        if (parent::pieceIsBlack($piece)) {
             //verificar os espaços a esquerda apartir da posição da peça
             for ($i = $index - 1; $i >= 0; $i--) {
-                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
-                    if (Chess::PieceIsBlack($board[$this->abc[$i] . $number])) {
+                if (isset(parent::$abc[$i]) && isset($board[parent::$abc[$i] . $number])) {
+                    if (parent::pieceIsBlack($board[parent::$abc[$i] . $number])) {
                         break;
                     }
-                    $return[] = $this->abc[$i] . $number;
-                    if (Chess::PieceIsWhite($board[$this->abc[$i] . $number])) {
+                    $return[] = parent::$abc[$i] . $number;
+                    if (parent::pieceIsWhite($board[parent::$abc[$i] . $number])) {
                         break;
                     }
                 }
@@ -162,12 +161,12 @@ class Queen
 
             //verificar os espaços a direita apartir da posição da peça
             for ($i = $index + 1; $i <= 7; $i++) {
-                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
-                    if (Chess::PieceIsBlack($board[$this->abc[$i] . $number])) {
+                if (isset(parent::$abc[$i]) && isset($board[parent::$abc[$i] . $number])) {
+                    if (parent::pieceIsBlack($board[parent::$abc[$i] . $number])) {
                         break;
                     }
-                    $return[] = $this->abc[$i] . $number;
-                    if (Chess::PieceIsWhite($board[$this->abc[$i] . $number])) {
+                    $return[] = parent::$abc[$i] . $number;
+                    if (parent::pieceIsWhite($board[parent::$abc[$i] . $number])) {
                         break;
                     }
                 }
@@ -176,11 +175,11 @@ class Queen
             //verificar os espaços em baixo apartir da posição da peça
             for ($i = $number - 1; $i >= 1; $i--) {
                 if (isset($board[$letter . $i])) {
-                    if (Chess::PieceIsBlack($board[$letter . $i])) {
+                    if (parent::pieceIsBlack($board[$letter . $i])) {
                         break;
                     }
                     $return[] = $letter . $i;
-                    if (Chess::PieceIsWhite($board[$letter . $i])) {
+                    if (parent::pieceIsWhite($board[$letter . $i])) {
                         break;
                     }
                 }
@@ -189,11 +188,11 @@ class Queen
             //verificar os espaços em cima apartir da posição da peça
             for ($i = $number + 1; $i <= 8; $i++) {
                 if (isset($board[$letter . $i])) {
-                    if (Chess::PieceIsBlack($board[$letter . $i])) {
+                    if (parent::pieceIsBlack($board[$letter . $i])) {
                         break;
                     }
                     $return[] = $letter . $i;
-                    if (Chess::PieceIsWhite($board[$letter . $i])) {
+                    if (parent::pieceIsWhite($board[$letter . $i])) {
                         break;
                     }
                 }

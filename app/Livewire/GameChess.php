@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Services\Chess;
+use App\Services\Piece;
 use App\Services\VerifyPiece;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -59,7 +60,7 @@ class GameChess extends Component
     {
         if ($this->select) {
 
-            if ($this->turn && Chess::PieceIsWhite($piece) || !$this->turn && Chess::PieceIsBlack($piece)) {
+            if ($this->turn && Piece::pieceIsWhite($piece) || !$this->turn && Piece::pieceIsBlack($piece)) {
                 $this->selectedPiece = [
                     'position' => $position,
                     'piece' => $piece
@@ -69,9 +70,6 @@ class GameChess extends Component
                 $this->possibilities = VerifyPiece::verify($this->board, $position, $piece);
             }
         } else {
-
-
-
 
             if (in_array($position, $this->possibilities)) {
                 $this->board[$this->selectedPiece['position']] = $this->selectedPiece['position'];
@@ -91,7 +89,6 @@ class GameChess extends Component
                     $this->turn = !$this->turn;
                 }
             }
-
 
             $this->selectedPiece = [];
             $this->possibilities = [];

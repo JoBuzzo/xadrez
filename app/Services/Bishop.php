@@ -2,16 +2,14 @@
 
 namespace App\Services;
 
-class Bishop
+class Bishop extends Piece
 {
-    public $abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-    public function __invoke($board, $position, $piece)
+    public static function possibleMoves($board, $position, $piece): array
     {
         [$letter, $number] = str_split($position, 1);
-        $index = array_search($letter, $this->abc);
+        $index = array_search($letter, parent::$abc);
         $return = [];
-
 
 
         /**
@@ -21,12 +19,12 @@ class Bishop
         $j = $number;
         for ($i = $index + 1; $i <= 7; $i++) {
             $j++;
-            if (isset($board[$this->abc[$i] . $j])) {
-                if ($board[$this->abc[$i] . $j] == $this->abc[$i] . $j) {
-                    $return[] = $this->abc[$i] . $j;
+            if (isset($board[parent::$abc[$i] . $j])) {
+                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
+                    $return[] = parent::$abc[$i] . $j;
                 } else {
-                    if (Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$i] . $j])) {
-                        $return[] = $this->abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
+                        $return[] = parent::$abc[$i] . $j;
                     }
                     break;
                 }
@@ -40,12 +38,12 @@ class Bishop
         $j = $number;
         for ($i = $index - 1; $i >= 0; $i--) {
             $j++;
-            if (isset($board[$this->abc[$i] . $j])) {
-                if ($board[$this->abc[$i] . $j] == $this->abc[$i] . $j) {
-                    $return[] = $this->abc[$i] . $j;
+            if (isset($board[parent::$abc[$i] . $j])) {
+                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
+                    $return[] = parent::$abc[$i] . $j;
                 } else {
-                    if (Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$i] . $j])) {
-                        $return[] = $this->abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
+                        $return[] = parent::$abc[$i] . $j;
                     }
                     break;
                 }
@@ -59,12 +57,12 @@ class Bishop
         $j = $number;
         for ($i = $index - 1; $i >= 0; $i--) {
             $j--;
-            if (isset($board[$this->abc[$i] . $j])) {
-                if ($board[$this->abc[$i] . $j] == $this->abc[$i] . $j) {
-                    $return[] = $this->abc[$i] . $j;
+            if (isset($board[parent::$abc[$i] . $j])) {
+                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
+                    $return[] = parent::$abc[$i] . $j;
                 } else {
-                    if (Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$i] . $j])) {
-                        $return[] = $this->abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
+                        $return[] = parent::$abc[$i] . $j;
                     }
                     break;
                 }
@@ -78,12 +76,12 @@ class Bishop
         $j = $number;
         for ($i = $index + 1; $i <= 7; $i++) {
             $j--;
-            if (isset($board[$this->abc[$i] . $j])) {
-                if ($board[$this->abc[$i] . $j] == $this->abc[$i] . $j) {
-                    $return[] = $this->abc[$i] . $j;
+            if (isset($board[parent::$abc[$i] . $j])) {
+                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
+                    $return[] = parent::$abc[$i] . $j;
                 } else {
-                    if (Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$i] . $j])) {
-                        $return[] = $this->abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
+                        $return[] = parent::$abc[$i] . $j;
                     }
                     break;
                 }

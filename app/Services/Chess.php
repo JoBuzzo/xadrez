@@ -84,34 +84,5 @@ class Chess
         }
     }
 
-    public static function PieceIsWhite($piece)
-    {
-        return strstr($piece, 'branco');
-    }
-
-    public static function PieceIsBlack($piece)
-    {
-        return strstr($piece, 'preta');
-    }
-
-    public static function PieceIsBlackOrWhite($piece)
-    {
-        return strstr($piece, 'branco') || strstr($piece, 'preta');
-    }
-
-
-    //verifica se tem uma peça da mesma cor aonde na casa selecionada, caso não ter a peça é mexida
-    public static function canCaptureOwnPiece($piece, $selectedPiece)
-    {
-        return (!strstr($piece, 'branco') && strstr($selectedPiece, 'branco'))
-            || (!strstr($piece, 'preta') && strstr($selectedPiece, 'preta'));
-    }
-
-    public static function PiecesAreOfDifferentColors($piece, $secoundPiece)
-    {
-        return (Chess::PieceIsWhite($piece) &&
-            Chess::PieceIsBlack($secoundPiece)
-            || Chess::PieceIsBlack($piece) &&
-            Chess::PieceIsWhite($secoundPiece));
-    }
+    
 }

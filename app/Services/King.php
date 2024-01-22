@@ -2,14 +2,13 @@
 
 namespace App\Services;
 
-class King
+class King extends Piece
 {
-    public $abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-    public function __invoke($board, $position, $piece)
+    public static function possibleMoves($board, $position, $piece): array
     {
         [$letter, $number] = str_split($position, 1);
-        $index = array_search($letter, $this->abc);
+        $index = array_search($letter, parent::$abc);
         $return = [];
 
         /**
@@ -17,7 +16,7 @@ class King
          */
         if (isset($board[$letter . $number + 1])) {
             if (
-                Chess::PiecesAreOfDifferentColors($piece, $board[$letter . $number + 1])
+                parent::piecesAreOfDifferentColors($piece, $board[$letter . $number + 1])
                 ||  $board[$letter . $number + 1] == $letter . $number + 1
             ) {
                 $return[] = $letter . $number + 1;
@@ -29,7 +28,7 @@ class King
          */
         if (isset($board[$letter . $number - 1])) {
             if (
-                Chess::PiecesAreOfDifferentColors($piece, $board[$letter . $number - 1])
+                parent::piecesAreOfDifferentColors($piece, $board[$letter . $number - 1])
                 ||  $board[$letter . $number - 1] == $letter . $number - 1
             ) {
                 $return[] = $letter . $number - 1;
@@ -39,24 +38,24 @@ class King
         /**
          * Esquerda
          */
-        if (isset($this->abc[$index - 1]) && isset($board[$this->abc[$index - 1] . $number])) {
+        if (isset(parent::$abc[$index - 1]) && isset($board[parent::$abc[$index - 1] . $number])) {
             if (
-                Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$index - 1] . $number])
-                ||  $board[$this->abc[$index - 1] . $number] == $this->abc[$index - 1] . $number
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$index - 1] . $number])
+                ||  $board[parent::$abc[$index - 1] . $number] == parent::$abc[$index - 1] . $number
             ) {
-                $return[] = $this->abc[$index - 1] . $number;
+                $return[] = parent::$abc[$index - 1] . $number;
             }
         }
 
         /**
          * Direita
          */
-        if (isset($this->abc[$index + 1]) && isset($board[$this->abc[$index + 1] . $number])) {
+        if (isset(parent::$abc[$index + 1]) && isset($board[parent::$abc[$index + 1] . $number])) {
             if (
-                Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$index + 1] . $number])
-                ||  $board[$this->abc[$index + 1] . $number] == $this->abc[$index + 1] . $number
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$index + 1] . $number])
+                ||  $board[parent::$abc[$index + 1] . $number] == parent::$abc[$index + 1] . $number
             ) {
-                $return[] = $this->abc[$index + 1] . $number;
+                $return[] = parent::$abc[$index + 1] . $number;
             }
         }
 
@@ -65,48 +64,48 @@ class King
         /**
          * Diagonal Esquerda Cima
          */
-        if (isset($this->abc[$index - 1]) && isset($board[$this->abc[$index - 1] . $number + 1])) {
+        if (isset(parent::$abc[$index - 1]) && isset($board[parent::$abc[$index - 1] . $number + 1])) {
             if (
-                Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$index - 1] . $number + 1])
-                ||  $board[$this->abc[$index - 1] . $number + 1] == $this->abc[$index - 1] . $number + 1
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$index - 1] . $number + 1])
+                ||  $board[parent::$abc[$index - 1] . $number + 1] == parent::$abc[$index - 1] . $number + 1
             ) {
-                $return[] = $this->abc[$index - 1] . $number + 1;
+                $return[] = parent::$abc[$index - 1] . $number + 1;
             }
         }
 
         /**
          * Diagonal direita Cima
          */
-        if (isset($this->abc[$index + 1]) && isset($board[$this->abc[$index + 1] . $number + 1])) {
+        if (isset(parent::$abc[$index + 1]) && isset($board[parent::$abc[$index + 1] . $number + 1])) {
             if (
-                Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$index + 1] . $number + 1])
-                ||  $board[$this->abc[$index + 1] . $number + 1] == $this->abc[$index + 1] . $number + 1
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$index + 1] . $number + 1])
+                ||  $board[parent::$abc[$index + 1] . $number + 1] == parent::$abc[$index + 1] . $number + 1
             ) {
-                $return[] = $this->abc[$index + 1] . $number + 1;
+                $return[] = parent::$abc[$index + 1] . $number + 1;
             }
         }
 
         /**
          * Diagonal Esquerda Baixo
          */
-        if (isset($this->abc[$index - 1]) && isset($board[$this->abc[$index - 1] . $number - 1])) {
+        if (isset(parent::$abc[$index - 1]) && isset($board[parent::$abc[$index - 1] . $number - 1])) {
             if (
-                Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$index - 1] . $number - 1])
-                ||  $board[$this->abc[$index - 1] . $number - 1] == $this->abc[$index - 1] . $number - 1
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$index - 1] . $number - 1])
+                ||  $board[parent::$abc[$index - 1] . $number - 1] == parent::$abc[$index - 1] . $number - 1
             ) {
-                $return[] = $this->abc[$index - 1] . $number - 1;
+                $return[] = parent::$abc[$index - 1] . $number - 1;
             }
         }
 
         /**
          * Diagonal direita Baixo
          */
-        if (isset($this->abc[$index + 1]) && isset($board[$this->abc[$index + 1] . $number - 1])) {
+        if (isset(parent::$abc[$index + 1]) && isset($board[parent::$abc[$index + 1] . $number - 1])) {
             if (
-                Chess::PiecesAreOfDifferentColors($piece, $board[$this->abc[$index + 1] . $number - 1])
-                ||  $board[$this->abc[$index + 1] . $number - 1] == $this->abc[$index + 1] . $number - 1
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$index + 1] . $number - 1])
+                ||  $board[parent::$abc[$index + 1] . $number - 1] == parent::$abc[$index + 1] . $number - 1
             ) {
-                $return[] = $this->abc[$index + 1] . $number - 1;
+                $return[] = parent::$abc[$index + 1] . $number - 1;
             }
         }
 

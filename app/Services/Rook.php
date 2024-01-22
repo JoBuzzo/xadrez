@@ -2,28 +2,27 @@
 
 namespace App\Services;
 
-class Tower
+class Rook extends Piece
 {
-    public $abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-    public function __invoke($board, $position, $piece)
+    public static function possibleMoves($board, $position, $piece): array
     {
         [$letter, $number] = str_split($position, 1);
 
-        $index = array_search($letter, $this->abc);
+        $index = array_search($letter, self::$abc);
 
         
         $return = [];
 
-        if (Chess::PieceIsWhite($piece)) {
+        if (parent::pieceIsWhite($piece)) {
             //verificar os espaços a esquerda apartir da posição da peça
             for ($i = $index - 1; $i >= 0; $i--) {
-                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
-                    if (Chess::PieceIsWhite($board[$this->abc[$i] . $number])) {
+                if (isset(self::$abc[$i]) && isset($board[self::$abc[$i] . $number])) {
+                    if (parent::pieceIsWhite($board[self::$abc[$i] . $number])) {
                         break;
                     }
-                    $return[] = $this->abc[$i] . $number;
-                    if (Chess::PieceIsBlack($board[$this->abc[$i] . $number])) {
+                    $return[] = self::$abc[$i] . $number;
+                    if (parent::pieceIsBlack($board[self::$abc[$i] . $number])) {
                         break;
                     }
                 }
@@ -32,12 +31,12 @@ class Tower
 
             //verificar os espaços a direita apartir da posição da peça
             for ($i = $index + 1; $i <= 7; $i++) {
-                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
-                    if (Chess::PieceIsWhite($board[$this->abc[$i] . $number])) {
+                if (isset(self::$abc[$i]) && isset($board[self::$abc[$i] . $number])) {
+                    if (parent::pieceIsWhite($board[self::$abc[$i] . $number])) {
                         break;
                     }
-                    $return[] = $this->abc[$i] . $number;
-                    if (Chess::PieceIsBlack($board[$this->abc[$i] . $number])) {
+                    $return[] = self::$abc[$i] . $number;
+                    if (parent::pieceIsBlack($board[self::$abc[$i] . $number])) {
                         break;
                     }
                 }
@@ -46,11 +45,11 @@ class Tower
             //verificar os espaços em baixo apartir da posição da peça
             for ($i = $number - 1; $i >= 1; $i--) {
                 if (isset($board[$letter . $i])) {
-                    if (Chess::PieceIsWhite($board[$letter . $i])) {
+                    if (parent::pieceIsWhite($board[$letter . $i])) {
                         break;
                     }
                     $return[] = $letter . $i;
-                    if (Chess::PieceIsBlack($board[$letter . $i])) {
+                    if (parent::pieceIsBlack($board[$letter . $i])) {
                         break;
                     }
                 }
@@ -59,26 +58,26 @@ class Tower
             //verificar os espaços em cima apartir da posição da peça
             for ($i = $number + 1; $i <= 8; $i++) {
                 if (isset($board[$letter . $i])) {
-                    if (Chess::PieceIsWhite($board[$letter . $i])) {
+                    if (parent::pieceIsWhite($board[$letter . $i])) {
                         break;
                     }
                     $return[] = $letter . $i;
-                    if (Chess::PieceIsBlack($board[$letter . $i])) {
+                    if (parent::pieceIsBlack($board[$letter . $i])) {
                         break;
                     }
                 }
             }
         }
 
-        if (Chess::PieceIsBlack($piece)) {
+        if (parent::pieceIsBlack($piece)) {
             //verificar os espaços a esquerda apartir da posição da peça
             for ($i = $index - 1; $i >= 0; $i--) {
-                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
-                    if (Chess::PieceIsBlack($board[$this->abc[$i] . $number])) {
+                if (isset(self::$abc[$i]) && isset($board[self::$abc[$i] . $number])) {
+                    if (parent::pieceIsBlack($board[self::$abc[$i] . $number])) {
                         break;
                     }
-                    $return[] = $this->abc[$i] . $number;
-                    if (Chess::PieceIsWhite($board[$this->abc[$i] . $number])) {
+                    $return[] = self::$abc[$i] . $number;
+                    if (parent::pieceIsWhite($board[self::$abc[$i] . $number])) {
                         break;
                     }
                 }
@@ -87,12 +86,12 @@ class Tower
 
             //verificar os espaços a direita apartir da posição da peça
             for ($i = $index + 1; $i <= 7; $i++) {
-                if (isset($this->abc[$i]) && isset($board[$this->abc[$i] . $number])) {
-                    if (Chess::PieceIsBlack($board[$this->abc[$i] . $number])) {
+                if (isset(self::$abc[$i]) && isset($board[self::$abc[$i] . $number])) {
+                    if (parent::pieceIsBlack($board[self::$abc[$i] . $number])) {
                         break;
                     }
-                    $return[] = $this->abc[$i] . $number;
-                    if (Chess::PieceIsWhite($board[$this->abc[$i] . $number])) {
+                    $return[] = self::$abc[$i] . $number;
+                    if (parent::pieceIsWhite($board[self::$abc[$i] . $number])) {
                         break;
                     }
                 }
@@ -101,11 +100,11 @@ class Tower
             //verificar os espaços em baixo apartir da posição da peça
             for ($i = $number - 1; $i >= 1; $i--) {
                 if (isset($board[$letter . $i])) {
-                    if (Chess::PieceIsBlack($board[$letter . $i])) {
+                    if (parent::pieceIsBlack($board[$letter . $i])) {
                         break;
                     }
                     $return[] = $letter . $i;
-                    if (Chess::PieceIsWhite($board[$letter . $i])) {
+                    if (parent::pieceIsWhite($board[$letter . $i])) {
                         break;
                     }
                 }
@@ -114,11 +113,11 @@ class Tower
             //verificar os espaços em cima apartir da posição da peça
             for ($i = $number + 1; $i <= 8; $i++) {
                 if (isset($board[$letter . $i])) {
-                    if (Chess::PieceIsBlack($board[$letter . $i])) {
+                    if (parent::pieceIsBlack($board[$letter . $i])) {
                         break;
                     }
                     $return[] = $letter . $i;
-                    if (Chess::PieceIsWhite($board[$letter . $i])) {
+                    if (parent::pieceIsWhite($board[$letter . $i])) {
                         break;
                     }
                 }
