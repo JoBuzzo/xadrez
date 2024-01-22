@@ -1,6 +1,6 @@
 <div class="flex flex-col bg-[#c2bb9f] rounded-lg mt-1 relative">
     <div class="w-full h-[75px] flex justify-center items-center text-2xl font-extrabold px-4">
-        <h1>Xadrez</h1>
+        <h1>Xadrez {{ $check ? 'Check' : ''}}</h1>
     </div>
     <div class="flex select-none">
         @php

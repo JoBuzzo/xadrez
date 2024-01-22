@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Services\Check;
 use App\Services\Chess;
 use App\Services\Piece;
 use App\Services\VerifyPiece;
@@ -56,6 +57,7 @@ class GameChess extends Component
     public array $possibilities;
 
     public bool $modal = false;
+    public bool $check = false;
     public function move($position, $piece)
     {
         if ($this->select) {
@@ -74,6 +76,13 @@ class GameChess extends Component
             if (in_array($position, $this->possibilities)) {
                 $this->board[$this->selectedPiece['position']] = $this->selectedPiece['position'];
                 $this->board[$position] = $this->selectedPiece['piece'];
+
+                /**
+                 * Verificar se essa peça faz check com o rei adversário nessa nova posição do tabuleiro
+                 * ....
+                 */
+                $this->check = Check::verify($this->board, $position, $this->selectedPiece['piece']);
+
 
                 /**
                  * Se o peão chegar no fim do tabuleiro, aparecer as outras peças para substitui-lo
