@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Services\Check;
 use App\Services\Chess;
+use App\Services\Pawn;
 use App\Services\Piece;
 use App\Services\VerifyPiece;
 use Livewire\Attributes\Title;
@@ -56,8 +57,13 @@ class GameChess extends Component
     public array $selectedPiece;
     public array $possibilities;
 
+
     public bool $modal = false;
     public bool $check = false;
+
+
+    public $passant;
+    public $pawnPosition;
     public function move($position, $piece)
     {
         if ($this->select) {
@@ -70,6 +76,9 @@ class GameChess extends Component
                 $this->select = false;
                 //verifica que tipo de peça foi selecionada e mostra quais casas é possível de movimentar a peça selecionada
                 $this->possibilities = VerifyPiece::verify($this->board, $position, $piece);
+                if ($this->passant) {
+                    $this->possibilities[] = $this->passant;
+                }
             }
         } else {
 
@@ -77,12 +86,24 @@ class GameChess extends Component
                 $this->board[$this->selectedPiece['position']] = $this->selectedPiece['position'];
                 $this->board[$position] = $this->selectedPiece['piece'];
 
+
+                if($position == $this->passant){
+                    $this->board[$this->pawnPosition] = $this->pawnPosition;
+                }
                 /**
                  * Verificar se essa peça faz check com o rei adversário nessa nova posição do tabuleiro
                  * ....
                  */
                 $this->check = Check::verify($this->board);
 
+
+                /**
+                 * Movimento especial do peão "En passant" 
+                 */
+                $this->passant = Pawn::enPassant($this->board, $this->selectedPiece['position'], $position);
+                if ($this->passant) {
+                    $this->pawnPosition = $position;
+                }
 
                 /**
                  * Se o peão chegar no fim do tabuleiro, aparecer as outras peças para substitui-lo
