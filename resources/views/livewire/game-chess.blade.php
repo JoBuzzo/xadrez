@@ -17,7 +17,7 @@
         </div>
 
         <div class="flex flex-col">
-            <div class="transform rotate-[-90deg] lg:w-[600px] lg:h-[600px] shadow-2xl w-[288px] h-w-[288px]">
+            <div class="transform rotate-[-90deg] lg:w-[600px] lg:h-[600px] shadow-2xl w-[288px] h-[288px]">
                 @foreach ($board as $key => $box)
                     @php
                         $num++;
