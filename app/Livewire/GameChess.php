@@ -81,7 +81,7 @@ class GameChess extends Component
                  * Verificar se essa peça faz check com o rei adversário nessa nova posição do tabuleiro
                  * ....
                  */
-                $this->check = Check::verify($this->board, $position, $this->selectedPiece['piece']);
+                $this->check = Check::verify($this->board);
 
 
                 /**
