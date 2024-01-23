@@ -17,4 +17,10 @@ enum ChessPiece
     const BISHOP_BLACK = 'bispo_preta';
     const QUEEN_BLACK = 'rainha_preta';
     const KING_BLACK = 'rei_preta';
+
+
+    public static function getColor(string $piece): string
+    {
+        return str_ends_with($piece, '_branco') ? ChessPieceColor::WHITE : ChessPieceColor::BLACK;
+    }
 }
