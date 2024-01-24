@@ -6,6 +6,25 @@ abstract class Piece
 {
     public static $abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
+    public static $pieces = [
+        'brancas' => [
+            'torre_branco',
+            'cavalo_branco',
+            'bispo_branco',
+            'rei_branco',
+            'rainha_branco',
+            'peao_branco'
+        ],
+        'pretas' => [
+            'torre_preta',
+            'cavalo_preta',
+            'bispo_preta',
+            'rei_preta',
+            'rainha_preta',
+            'peao_preta'
+        ]
+    ];
+
     public static function possibleMoves($board, $position, $piece): array
     {
         return [];

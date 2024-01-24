@@ -1,5 +1,5 @@
 <div class="flex flex-col bg-[#c2bb9f] rounded-lg lg:mt-1 mt-16 relative">
-    <div class="w-full lg:h-[75px] h-7 flex justify-center items-center lg:text-2xl font-extrabold px-4">
+    <div class="w-full lg:h-[75px] h-12 flex justify-center items-center lg:text-2xl font-extrabold px-4">
         <h1>Xadrez {{ $check ? 'Check' : '' }}</h1>
     </div>
     <div class="flex select-none">

@@ -42,6 +42,7 @@ class VerifyPiece
     {
         $possibilities = King::possibleMoves($board, $position, $piece);
 
+
         foreach ($board as $key => $b) {
             if ($b != $piece) {
                 switch ($b) {
@@ -83,6 +84,7 @@ class VerifyPiece
                 }
             }
         }
+
 
         return $possibilities;
     }

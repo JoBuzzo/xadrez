@@ -64,6 +64,14 @@ class GameChess extends Component
 
     public $passant;
     public $pawnPosition;
+
+    public $kingWhite = false;
+    public $rookWhite1 = false;
+    public $rookWhite2 = false;
+
+    public $kingBlack = false;
+    public $rookBlack1 = false;
+    public $rookBlack2 = false;
     public function move($position, $piece)
     {
         if ($this->select) {
@@ -78,6 +86,73 @@ class GameChess extends Component
                 $this->possibilities = VerifyPiece::verify($this->board, $position, $piece);
                 if ($this->passant) {
                     $this->possibilities[] = $this->passant;
+
+                }
+
+                /**
+                 * remover a opção do roque caso de check
+                 */
+                if ($this->check && $piece == 'rei_branco') {
+                    $keysToRemove = array('g1', 'c1');
+
+                    foreach ($keysToRemove as $value) {
+                        $key = array_search($value, $this->possibilities);
+                        if ($key !== false) {
+                            unset($this->possibilities[$key]);
+                        }
+                    }
+                }
+                if ($this->check && $piece == 'rei_preta') {
+                    $keysToRemove = array('g8',  'c8');
+
+                    foreach ($keysToRemove as $value) {
+                        $key = array_search($value, $this->possibilities);
+                        if ($key !== false) {
+                            unset($this->possibilities[$key]);
+                        }
+                    }
+                }
+
+                /**
+                 * remover a opção do roque caso a torre ou rei se movimentou
+                 * branco
+                 */
+                if ($this->kingWhite && $piece == 'rei_branco') {
+                    $keysToRemove = [];
+                    if ($this->rookWhite1) {
+                        array_push($keysToRemove, 'c1');
+                    }
+                    if ($this->rookWhite2) {
+                        array_push($keysToRemove, 'f1');
+                    }
+
+                    foreach ($keysToRemove as $value) {
+                        $key = array_search($value, $this->possibilities);
+                        if ($key !== false) {
+                            unset($this->possibilities[$key]);
+                        }
+                    }
+                }
+
+                /**
+                 * remover a opção do roque caso a torre ou rei se movimentou
+                 * preta
+                 */
+                if ($this->kingBlack && $piece == 'rei_preta') {
+                    $keysToRemove = [];
+                    if ($this->rookBlack1) {
+                        array_push($keysToRemove, 'c8');
+                    }
+                    if ($this->rookBlack2) {
+                        array_push($keysToRemove, 'f8');
+                    }
+
+                    foreach ($keysToRemove as $value) {
+                        $key = array_search($value, $this->possibilities);
+                        if ($key !== false) {
+                            unset($this->possibilities[$key]);
+                        }
+                    }
                 }
             }
         } else {
@@ -87,7 +162,56 @@ class GameChess extends Component
                 $this->board[$position] = $this->selectedPiece['piece'];
 
 
-                if($position == $this->passant){
+                /**
+                 * Verificar se é o rei ou a torre que se movimentou para o Roque
+                 */
+                if ($this->selectedPiece['piece'] == 'torre_branco' && $this->selectedPiece['position'] == 'a1') {
+                    $this->rookWhite1 = true;
+                }
+                if ($this->selectedPiece['piece'] == 'torre_branco' && $this->selectedPiece['position'] == 'h1') {
+                    $this->rookWhite2 = true;
+                }
+                if ($this->selectedPiece['piece'] == 'rei_branco') {
+                    $this->kingWhite = true;
+                    $this->rookWhite1 = true;
+                    $this->rookWhite2 = true;
+                }
+
+                if ($this->selectedPiece['piece'] == 'torre_preta' && $this->selectedPiece['position'] == 'a8') {
+                    $this->rookBlack1 = true;
+                }
+                if ($this->selectedPiece['piece'] == 'torre_preta' && $this->selectedPiece['position'] == 'h8') {
+                    $this->rookBlack2 = true;
+                }
+                if ($this->selectedPiece['piece'] == 'rei_preta') {
+                    $this->kingBlack = true;
+                    $this->rookBlack1 = true;
+                    $this->rookBlack2 = true;
+                }
+
+                /**
+                 * Roque (Mudar a torre junto com o rei)
+                 */
+                if ($this->selectedPiece['piece'] == 'rei_branco' && $position == 'g1') {
+                    $this->board['h1'] = 'h1';
+                    $this->board['f1'] = 'torre_branco';
+                }
+                if ($this->selectedPiece['piece'] == 'rei_branco' && $position == 'c1') {
+                    $this->board['a1'] = 'a1';
+                    $this->board['d1'] = 'torre_branco';
+                }
+                if ($this->selectedPiece['piece'] == 'rei_preta' && $position == 'g8') {
+                    $this->board['h8'] = 'h8';
+                    $this->board['f8'] = 'torre_preta';
+                }
+                if ($this->selectedPiece['piece'] == 'rei_preta' && $position == 'c8') {
+                    $this->board['a8'] = 'a8';
+                    $this->board['d8'] = 'torre_preta';
+                }
+
+
+
+                if ($position == $this->passant) {
                     $this->board[$this->pawnPosition] = $this->pawnPosition;
                 }
                 /**
