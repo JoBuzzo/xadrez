@@ -128,7 +128,7 @@ class GameChess extends Component
                         array_push($keysToRemove, 'c1');
                     }
                     if ($this->rookWhite2) {
-                        array_push($keysToRemove, 'f1');
+                        array_push($keysToRemove, 'g1');
                     }
 
                     foreach ($keysToRemove as $value) {
@@ -149,7 +149,7 @@ class GameChess extends Component
                         array_push($keysToRemove, 'c8');
                     }
                     if ($this->rookBlack2) {
-                        array_push($keysToRemove, 'f8');
+                        array_push($keysToRemove, 'g8');
                     }
 
                     foreach ($keysToRemove as $value) {
