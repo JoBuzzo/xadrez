@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Services\Check;
 use App\Services\Chess;
+use App\Services\EscapeCheck;
 use App\Services\Pawn;
 use App\Services\Piece;
 use App\Services\VerifyPiece;
@@ -77,6 +78,7 @@ class GameChess extends Component
         if ($this->select) {
 
             if ($this->turn && Piece::pieceIsWhite($piece) || !$this->turn && Piece::pieceIsBlack($piece)) {
+
                 $this->selectedPiece = [
                     'position' => $position,
                     'piece' => $piece
@@ -86,13 +88,16 @@ class GameChess extends Component
                 $this->possibilities = VerifyPiece::verify($this->board, $position, $piece);
                 if ($this->passant) {
                     $this->possibilities[] = $this->passant;
-
                 }
+
+                // if ($this->check) {
+                //     $this->possibilities = EscapeCheck::verify($this->board, $position, $piece);
+                // }
 
                 /**
                  * remover a opção do roque caso de check
                  */
-                if ($this->check && $piece == 'rei_branco') {
+                if ($this->check && $piece == 'rei_branco' && $position == 'e1') {
                     $keysToRemove = array('g1', 'c1');
 
                     foreach ($keysToRemove as $value) {
@@ -102,7 +107,7 @@ class GameChess extends Component
                         }
                     }
                 }
-                if ($this->check && $piece == 'rei_preta') {
+                if ($this->check && $piece == 'rei_preta' && $position == 'e8') {
                     $keysToRemove = array('g8',  'c8');
 
                     foreach ($keysToRemove as $value) {
@@ -117,7 +122,7 @@ class GameChess extends Component
                  * remover a opção do roque caso a torre ou rei se movimentou
                  * branco
                  */
-                if ($this->kingWhite && $piece == 'rei_branco') {
+                if ($this->kingWhite && $piece == 'rei_branco' && $position == 'e1') {
                     $keysToRemove = [];
                     if ($this->rookWhite1) {
                         array_push($keysToRemove, 'c1');
@@ -138,7 +143,7 @@ class GameChess extends Component
                  * remover a opção do roque caso a torre ou rei se movimentou
                  * preta
                  */
-                if ($this->kingBlack && $piece == 'rei_preta') {
+                if ($this->kingBlack && $piece == 'rei_preta' && $position == 'e8') {
                     $keysToRemove = [];
                     if ($this->rookBlack1) {
                         array_push($keysToRemove, 'c8');
