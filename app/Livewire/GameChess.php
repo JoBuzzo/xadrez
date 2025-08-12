@@ -9,6 +9,7 @@ use App\Services\EscapeCheck;
 use App\Services\Pawn;
 use App\Services\Piece;
 use App\Services\VerifyPiece;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -273,5 +274,12 @@ class GameChess extends Component
             $this->turn = !$this->turn;
             $this->replacePosition = null;
         }
+    }
+
+    #[On('movedPieceReceived')]
+    public function handleMovedPiece($data)
+    {
+        $this->board = $data['board'];
+        $this->turn = $data['from'] == 'branco' ? true : false;
     }
 }

@@ -27,10 +27,12 @@
                         }
 
                         $colorIndex = $num % 2;
-                        $contrast = (array_key_exists('position', $selectedPiece) && $selectedPiece['position'] == $key) || (!empty($possibilities) && in_array($key, $possibilities));
+                        $contrast =
+                            (array_key_exists('position', $selectedPiece) && $selectedPiece['position'] == $key) ||
+                            (!empty($possibilities) && in_array($key, $possibilities));
                     @endphp
 
-                    <div class="float-left lg:w-[75px] lg:h-[75px] w-9 h-9 text-gray-100 transform rotate-[90deg] flex justify-center items-center cursor-pointer 
+                    <div class="float-left lg:w-[75px] lg:h-[75px] w-9 h-9 text-gray-100 transform rotate-[90deg] flex justify-center items-center cursor-pointer
                         {{ $colors[$colorIndex] }}
                         {{ $contrast ? ' contrast-50' : '' }}"
                         wire:click="move('{{ $key }}', '{{ $box }}')">
@@ -108,3 +110,19 @@
         </div>
     @endif
 </div>
+@script
+    <script>
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('cfb5481c8ccf4afa2a3d', {
+            cluster: 'sa1'
+        });
+
+        var channel = pusher.subscribe('new-move');
+        channel.bind('moved-piece', function(data) {
+            $wire.dispatch('movedPieceReceived', {
+                data: data
+            });
+        });
+    </script>
+@endscript
