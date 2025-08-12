@@ -34,10 +34,18 @@ abstract class Piece
     {
         return strstr($piece, 'branco');
     }
+    public static function pieceAndUserIsWhite($piece, $userColor)
+    {
+        return strstr($piece, 'branco') && $userColor == 'branco';
+    }
 
     public static function pieceIsBlack($piece)
     {
         return strstr($piece, 'preta');
+    }
+    public static function pieceAndUserIsBlack($piece, $userColor)
+    {
+        return strstr($piece, 'preta') && $userColor == 'preto';
     }
 
     public static function pieceIsBlackOrWhite($piece)
