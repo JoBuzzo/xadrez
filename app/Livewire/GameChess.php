@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Events\MovedPiece;
 use App\Services\Check;
 use App\Services\Chess;
 use App\Services\EscapeCheck;
@@ -227,7 +228,7 @@ class GameChess extends Component
 
 
                 /**
-                 * Movimento especial do peão "En passant" 
+                 * Movimento especial do peão "En passant"
                  */
                 $this->passant = Pawn::enPassant($this->board, $this->selectedPiece['position'], $position);
                 if ($this->passant) {
@@ -252,6 +253,8 @@ class GameChess extends Component
             $this->selectedPiece = [];
             $this->possibilities = [];
             $this->select = true;
+
+            event(new MovedPiece($this->board, $this->turn ? 'branco' : 'preta'));
         }
     }
 
