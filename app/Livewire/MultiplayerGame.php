@@ -108,7 +108,10 @@ class MultiplayerGame extends Component
     public function handleMovedPiece($data)
     {
         $this->board = $data['board'];
+        $this->room['board'] = $data['board'];
+        $this->room['turn'] = $data['from'] != $this->user['color'] ? 'branco' : 'preto';
         $this->turn = $data['from'] != $this->user['color'];
+        Cache::put('game-match-' . $this->room['uuid'], $this->room);
     }
 
     public function render()
