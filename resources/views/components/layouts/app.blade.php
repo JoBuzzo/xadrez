@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite('resources/css/app.css', 'resources/js/app.css')
+    @vite(['resources/js/app.js', 'resources/css/app.css'])
     <title>{{ $title ?? 'Page Title' }}</title>
     <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
-    
+
 </head>
 
 <body class="flex items-center justify-center overflow-x-hidden bg-gray-100">
