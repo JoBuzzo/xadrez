@@ -21,6 +21,7 @@ class MovedPiece implements ShouldBroadcastNow
     public function __construct(
         public array $board,
         public string $from,
+        public string $roomUuid = ''
     )
     {
         //
@@ -34,7 +35,7 @@ class MovedPiece implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('new-move'),
+            new Channel('new-move-' . $this->roomUuid),
         ];
     }
 
@@ -48,6 +49,7 @@ class MovedPiece implements ShouldBroadcastNow
         return [
             'board' => $this->board,
             'from' => $this->from,
+            'roomUuid' => $this->roomUuid,
         ];
     }
 }

@@ -95,7 +95,7 @@ class MultiplayerGame extends Component
                 $this->verifyCheck();
                 $this->handleEnPassantCapture($position);
                 $this->handlePawnPromotion($position);
-                event(new MovedPiece($this->board, $userColor));
+                event(new MovedPiece($this->board, $userColor, $this->room['uuid']));
             }
 
             $this->selectedPiece = [];

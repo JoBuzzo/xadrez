@@ -130,3 +130,16 @@
 
     @endif
 </div>
+@script
+    <script>
+        Alpine.effect(() => {
+            const channel = window.Echo.channel('new-move-{{ $room['uuid'] }}');
+
+            channel.listen('.moved-piece', (data) => {
+                Livewire.dispatch('movedPieceReceived', {
+                    data: data
+                })
+            });
+        });
+    </script>
+@endscript

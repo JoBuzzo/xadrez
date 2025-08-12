@@ -275,11 +275,4 @@ class GameChess extends Component
             $this->replacePosition = null;
         }
     }
-
-    #[On('movedPieceReceived')]
-    public function handleMovedPiece($data)
-    {
-        $this->board = $data['board'];
-        $this->turn = $data['from'] == 'branco' ? true : false;
-    }
 }
