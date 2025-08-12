@@ -49,7 +49,7 @@ class MultiplayerGame extends Component
      * - Se o tabuleiro já existir no cache, usar o existente
      * @return void
      */
-    public function generateBoard()
+    public function generateBoard(): void
     {
         $chess = new Chess;
 
@@ -66,7 +66,7 @@ class MultiplayerGame extends Component
         $this->abc = $chess->abc;
     }
 
-    public function move(string $position, string $piece)
+    public function move(string $position, string $piece): void
     {
         $userColor = $this->user['color'];
         $turn = $this->turn;
@@ -85,7 +85,7 @@ class MultiplayerGame extends Component
             $this->removeCastlingIfInCheck($piece, $position);
             $this->revokeCastlingRights($piece, $position);
             $this->canSelectPiece = false;
-        } else if ($myTurn) {
+        } else if ($turn) {
             if ($this->existsPositionInPossibilities($position)){
 
                 $this->board[$this->selectedPiece['position']] = $this->selectedPiece['position'];
@@ -95,12 +95,12 @@ class MultiplayerGame extends Component
                 $this->verifyCheck();
                 $this->handleEnPassantCapture($position);
                 $this->handlePawnPromotion($position);
+                event(new MovedPiece($this->board, $userColor));
             }
 
             $this->selectedPiece = [];
             $this->possibilities = [];
             $this->canSelectPiece = true;
-            event(new MovedPiece($this->board, $userColor));
         }
     }
 

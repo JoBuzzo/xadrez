@@ -15,17 +15,27 @@
                 @endphp
 
                 <div>
-                    @for ($i = 8; $i >= 1; $i--)
-                        <div
-                            class="lg:w-[75px] lg:h-[75px] w-7 h-9 justify-center items-center flex lg:text-2xl font-extrabold">
-                            {{ $i }}
-                        </div>
-                    @endfor
+                    @if ($user['color'] == 'branco')
+
+                        @for ($i = 8; $i >= 1; $i--)
+                            <div
+                                class="lg:w-[75px] lg:h-[75px] w-7 h-9 justify-center items-center flex lg:text-2xl font-extrabold">
+                                {{ $i }}
+                            </div>
+                        @endfor
+                    @else
+                        @for ($i = 1; $i <= 8; $i++)
+                            <div
+                                class="lg:w-[75px] lg:h-[75px] w-7 h-9 justify-center items-center flex lg:text-2xl font-extrabold">
+                                {{ $i }}
+                            </div>
+                        @endfor
+                    @endif
                 </div>
 
                 <div class="flex flex-col">
                     <div class="transform rotate-[-90deg] lg:w-[600px] lg:h-[600px] shadow-2xl w-[288px] h-[288px]">
-                        @foreach ($board as $key => $box)
+                        @foreach ($user['color'] == 'branco' ? $board : array_reverse($board) as $key => $box)
                             @php
                                 $num++;
 
@@ -52,7 +62,7 @@
                     </div>
 
                     <div class="flex">
-                        @foreach ($abc as $item)
+                        @foreach ($user['color'] == 'branco' ? $abc : array_reverse($abc) as $item)
                             <div
                                 class="lg:w-[75px] lg:h-[75px] w-9 h-7 justify-center items-center flex lg:text-2xl font-extrabold uppercase">
                                 {{ $item }}
@@ -63,27 +73,26 @@
 
                 <div
                     class="lg:w-[75px] w-7 lg:h-[600px] h-[288px] flex lg:text-lg font-extrabold justify-center
-            {{ $turn ? 'items-end' : 'items-start' }}
-            ">
-                    <div class="flex-col items-start justify-center hidden p-1 lg:flex">
+                    {{ $turn ? 'items-end' : 'items-start' }}
+                ">
+                    <div class="flex-col items-start justify-center hidden p-1 text-sm lg:flex">
                         <span>
                             @if ($turn)
-                                Brancas
+                                Sua Vez
                             @else
-                                Pretas
+                                Vez do Oponente
                             @endif
                         </span>
-                        <span>Jogam</span>
                     </div>
                 </div>
             </div>
 
-            <div class="flex items-center justify-center p-1 font-extrabold lg:hidden">
+            <div class="flex items-center justify-center p-1 text-sm font-extrabold lg:hidden">
                 <span>
                     @if ($turn)
-                        Brancas jogam
+                        Sua Vez
                     @else
-                        Pretas jogam
+                        Vez do Oponente
                     @endif
                 </span>
             </div>
@@ -98,7 +107,7 @@
                             Por favor escolha uma das peças abaixo:
                         </p>
                         @php
-                            $color = $this->turn ? 'branco' : 'preta';
+                            $color = $user['color'] == 'branco' ? 'branco' : 'preta';
                         @endphp
                         <div class="flex items-center justify-center">
                             <button wire:click='replacePawn("rainha")'>
