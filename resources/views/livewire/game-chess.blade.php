@@ -110,19 +110,3 @@
         </div>
     @endif
 </div>
-@script
-    <script>
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('cfb5481c8ccf4afa2a3d', {
-            cluster: 'sa1'
-        });
-
-        var channel = pusher.subscribe('new-move');
-        channel.bind('moved-piece', function(data) {
-            $wire.dispatch('movedPieceReceived', {
-                data: data
-            });
-        });
-    </script>
-@endscript
