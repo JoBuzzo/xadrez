@@ -1,19 +1,38 @@
 <div>
     @if ($waitingForOpponent)
-        <div class="flex items-center justify-center p-4 font-extrabold">
-            <span>Aguardando o oponente...</span>
+        <div class="flex flex-col items-center justify-center p-4 font-extrabold">
+            <span>Olá {{ $user['name'] }}</span>
+            <span>Aguarde um oponente...</span>
         </div>
     @else
+        @php
+
+            if ($room['users'][1]['uuid'] == $user['uuid']) {
+                $opponentName = $room['users'][0]['name'];
+            } else {
+                $opponentName = $room['users'][1]['name'];
+            }
+
+            $turnMessage = $turn ? "Vez de {$user['name']}" : "Vez de $opponentName";
+
+            $num = 0;
+            $colors = ['bg-black/70', 'bg-[#fbf5de]'];
+
+            $color = $user['color'] == 'branco' ? 'branco' : 'preta';
+        @endphp
         <div class="flex flex-col bg-[#c2bb9f] rounded-lg lg:mt-1 mt-16 relative">
-            <div class="w-full lg:h-[75px] h-12 flex justify-center items-center lg:text-2xl font-extrabold px-4">
-                <h1>Xadrez {{ $check ? 'Check' : '' }}</h1>
+            <div class="w-full lg:h-[75px] h-12 flex justify-between items-center lg:text-2xl font-extrabold px-4">
+                <div class="text-base">
+                    {{ $room['users'][0]['name'] }} - {{ ucfirst($room['users'][0]['color']) }}
+                </div>
+                <h1>
+                    Xadrez {{ $check ? 'Check' : '' }}
+                </h1>
+                <div class="text-base">
+                    {{ $room['users'][1]['name'] }} - {{ ucfirst($room['users'][1]['color']) }}
+                </div>
             </div>
             <div class="flex select-none">
-                @php
-                    $num = 0;
-                    $colors = ['bg-black/70', 'bg-[#fbf5de]'];
-                @endphp
-
                 <div>
                     @if ($user['color'] == 'branco')
 
@@ -77,11 +96,8 @@
                 ">
                     <div class="flex-col items-start justify-center hidden p-1 text-sm lg:flex">
                         <span>
-                            @if ($turn)
-                                Sua Vez
-                            @else
-                                Vez do Oponente
-                            @endif
+
+                            {{ $turnMessage }}
                         </span>
                     </div>
                 </div>
@@ -89,11 +105,7 @@
 
             <div class="flex items-center justify-center p-1 text-sm font-extrabold lg:hidden">
                 <span>
-                    @if ($turn)
-                        Sua Vez
-                    @else
-                        Vez do Oponente
-                    @endif
+                    {{ $turnMessage }}
                 </span>
             </div>
 
@@ -106,9 +118,7 @@
                             <br>
                             Por favor escolha uma das peças abaixo:
                         </p>
-                        @php
-                            $color = $user['color'] == 'branco' ? 'branco' : 'preta';
-                        @endphp
+
                         <div class="flex items-center justify-center">
                             <button wire:click='replacePawn("rainha")'>
                                 <img src="{{ asset("images/rainha_$color.png") }}" alt="piece">
