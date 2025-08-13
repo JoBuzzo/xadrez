@@ -9,8 +9,10 @@ use App\Services\VerifyPiece;
 use App\Traits\Livewire\MultiplayerChess;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Title('Partida Multiplayer')]
 class MultiplayerGame extends Component
 {
     use MultiplayerChess;
@@ -30,6 +32,8 @@ class MultiplayerGame extends Component
         }
 
         if (count($this->room['users']) == 2) {
+            $this->notifySecondPlayerJoined();
+
             $this->waitingForOpponent = false;
         }
 
@@ -42,6 +46,7 @@ class MultiplayerGame extends Component
             $this->turn = $this->room['turn'] == $this->user['color'];
         }
     }
+
 
     /**
      * Montar o tabuleiro de xadrez
@@ -86,7 +91,7 @@ class MultiplayerGame extends Component
             $this->revokeCastlingRights($piece, $position);
             $this->canSelectPiece = false;
         } else if ($turn) {
-            if ($this->existsPositionInPossibilities($position)){
+            if ($this->existsPositionInPossibilities($position)) {
 
                 $this->board[$this->selectedPiece['position']] = $this->selectedPiece['position'];
                 $this->board[$position] = $this->selectedPiece['piece'];

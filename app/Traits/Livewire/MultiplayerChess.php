@@ -2,6 +2,7 @@
 
 namespace App\Traits\Livewire;
 
+use App\Events\SecondPlayerJoined;
 use App\Services\Check;
 use App\Services\Pawn;
 
@@ -329,6 +330,19 @@ trait MultiplayerChess
             $this->modal = true;
         } else {
             $this->turn = !$this->turn;
+        }
+    }
+
+    /**
+     * Atualiza a página do primeiro jogador que está esperando o segundo jogador entrar
+     * - Se o tabuleiro não existir ou estiver vazio, notifica
+     * - Se o tabuleiro já existir, não faz nada
+     * @return void
+     */
+    private function notifySecondPlayerJoined()
+    {
+        if (!isset($this->room['board']) || (isset($this->room['board']) && $this->room['board'] == [])) {
+            event(new SecondPlayerJoined($this->room['uuid'], $this->room['users'][0]['uuid']));
         }
     }
 }

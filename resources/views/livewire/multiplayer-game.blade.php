@@ -133,13 +133,25 @@
 @script
     <script>
         Alpine.effect(() => {
-            const channel = window.Echo.channel('new-move-{{ $room['uuid'] }}');
+            const roomUuid = '{{ $room['uuid'] }}';
+            const userUuid = '{{ $user['uuid'] }}';
+
+            const channel = window.Echo.channel('new-move-' + roomUuid);
 
             channel.listen('.moved-piece', (data) => {
                 Livewire.dispatch('movedPieceReceived', {
                     data: data
                 })
             });
+
+
+
+            const startGameChannel = window.Echo.channel('start-game-' + roomUuid + '-' + userUuid);
+            startGameChannel.listen('.second-player-joined', (data) => {
+                startGameChannel.stopListening('.second-player-joined');
+                Livewire.navigate(window.location.href);
+            })
+
         });
     </script>
 @endscript
