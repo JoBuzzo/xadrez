@@ -144,8 +144,6 @@
                 })
             });
 
-
-
             const startGameChannel = window.Echo.channel('start-game-' + roomUuid + '-' + userUuid);
             startGameChannel.listen('.second-player-joined', (data) => {
                 startGameChannel.stopListening('.second-player-joined');

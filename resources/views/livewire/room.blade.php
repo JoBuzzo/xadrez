@@ -83,3 +83,17 @@
         </div>
     </div>
 </div>
+@script
+    <script>
+        Alpine.effect(() => {
+
+            const channel = window.Echo.channel('refresh-rooms');
+
+            channel.listen('.refresh-rooms', (data) => {
+                Livewire.dispatch('refresh-rooms', {
+                    data: data
+                })
+            });
+        });
+    </script>
+@endscript

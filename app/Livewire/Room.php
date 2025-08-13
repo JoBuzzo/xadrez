@@ -2,10 +2,14 @@
 
 namespace App\Livewire;
 
+use App\Events\RefreshRooms;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 
+#[Title('Salas de Xadrez')]
 class Room extends Component
 {
     public function render()
@@ -71,8 +75,8 @@ class Room extends Component
         }
 
         Cache::put('game-match-' . $room['uuid'], $room);
-
-        $this->redirect(route('multiplayer.game.chess', ['room' => $uuid, 'user' => $newUser['uuid']]));
+        event(new RefreshRooms($this->rooms));
+        $this->redirect(route('multiplayer.game.chess', ['room' => $uuid, 'user' => $newUser['uuid']]), true);
     }
 
 
@@ -90,5 +94,11 @@ class Room extends Component
         }
 
         return $rooms;
+    }
+
+    #[On('refresh-rooms')]
+    public function handleRefreshRooms($data)
+    {
+        $this->rooms = $data['rooms'] ?? Cache::get('rooms', $this->rooms);
     }
 }
