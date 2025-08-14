@@ -66,6 +66,7 @@
                     Cancelar
                 </button>
                 <button
+                    wire:loading.attr="disabled"
                     @click="
                         if(userName.trim() === '') {
                             alert('Por favor, digite seu nome.');
