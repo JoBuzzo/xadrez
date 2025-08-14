@@ -269,7 +269,7 @@ trait MultiplayerChess
      * @param string $position
      * @return void
      */
-    private function executeCastlingMove(string $position)
+    private function executeCastlingMove(string $position): void
     {
         if ($this->selectedPiece['piece'] == 'rei_branco' && $position == 'g1') {
             $this->board['h1'] = 'h1';
@@ -309,7 +309,7 @@ trait MultiplayerChess
      * Verificar se essa peça faz check com o rei adversário nessa nova posição do tabuleiro
      * @return void
      */
-    private function verifyCheck()
+    private function verifyCheck(): void
     {
         $this->check = Check::verify($this->board);
     }
@@ -339,7 +339,7 @@ trait MultiplayerChess
      * - Se o tabuleiro já existir, não faz nada
      * @return void
      */
-    private function notifySecondPlayerJoined()
+    private function notifySecondPlayerJoined(): void
     {
         if (!isset($this->room['board']) || (isset($this->room['board']) && $this->room['board'] == [])) {
             event(new SecondPlayerJoined($this->room['uuid'], $this->room['users'][0]['uuid']));

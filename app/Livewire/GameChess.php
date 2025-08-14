@@ -5,11 +5,9 @@ namespace App\Livewire;
 use App\Events\MovedPiece;
 use App\Services\Check;
 use App\Services\Chess;
-use App\Services\EscapeCheck;
 use App\Services\Pawn;
 use App\Services\Piece;
 use App\Services\VerifyPiece;
-use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
