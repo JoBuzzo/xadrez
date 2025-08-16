@@ -4,7 +4,7 @@ namespace App\Services\Piece\Pawn\Traits;
 
 use App\Enums\ChessPiece;
 
-trait BlackPawnMovies
+trait BlackPawnMoves
 {
     /**
      * Summary of getBlackPawnInitialMoves
@@ -105,7 +105,7 @@ trait BlackPawnMovies
                 return $letter2 . $number1 - 1;
             }
         }
-        
+
         return null;
     }
 }

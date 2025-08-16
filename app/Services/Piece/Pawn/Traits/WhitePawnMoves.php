@@ -4,7 +4,7 @@ namespace App\Services\Piece\Pawn\Traits;
 
 use App\Enums\ChessPiece;
 
-trait WhitePawnMovies
+trait WhitePawnMoves
 {
     /**
      * Summary of getWhitePawnInitialMoves

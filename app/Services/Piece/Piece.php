@@ -25,7 +25,7 @@ abstract class Piece
         ]
     ];
 
-    public static function possibleMoves($board, $position, $piece): array
+    public static function possibleMoves(array $board, string $position, string $piece): array
     {
         return [];
     }

@@ -2,8 +2,8 @@
 
 namespace App\Services\Piece\Pawn;
 
-use App\Services\Piece\Pawn\Traits\BlackPawnMovies;
-use App\Services\Piece\Pawn\Traits\WhitePawnMovies;
+use App\Services\Piece\Pawn\Traits\BlackPawnMoves;
+use App\Services\Piece\Pawn\Traits\WhitePawnMoves;
 use App\Services\Piece\Piece;
 
 class PawnService extends Piece
@@ -14,17 +14,17 @@ class PawnService extends Piece
      * quando o peão ainda está na sua posição inicial, este pode dar um salto de 2 casas à frente.
      */
 
-    use WhitePawnMovies;
-    use BlackPawnMovies;
+    use WhitePawnMoves;
+    use BlackPawnMoves;
 
     /**
      * Summary of possibleMoves
-     * @param mixed $board
-     * @param mixed $position
-     * @param mixed $piece
+     * @param array $board
+     * @param string $position
+     * @param string $piece
      * @return array
      */
-    public static function possibleMoves($board, $position, $piece): array
+    public static function possibleMoves(array $board, string $position, string $piece): array
     {
         [$letter, $number] = parent::getLetterAndNumber($position);
         $possibilities = [];
