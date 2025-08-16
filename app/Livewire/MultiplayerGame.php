@@ -7,6 +7,8 @@ use App\Services\Chess;
 use App\Services\Piece;
 use App\Services\VerifyPiece;
 use App\Traits\Livewire\MultiplayerChess;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
@@ -19,7 +21,7 @@ class MultiplayerGame extends Component
 
     public ?string $passant = null;
 
-    public function mount()
+    public function mount(): void
     {
         $roomUuid = request()->get('room');
         $userUuid = request()->get('user');
@@ -28,7 +30,7 @@ class MultiplayerGame extends Component
 
         if (empty($this->room)) {
             session()->flash('error', 'Sala não encontrada');
-            return $this->redirect(route('rooms'));
+            $this->redirect(route('rooms'), true);
         }
 
         if (count($this->room['users']) == 2) {
@@ -49,6 +51,7 @@ class MultiplayerGame extends Component
 
 
     /**
+     * generateBoard
      * Montar o tabuleiro de xadrez
      * - Se o tabuleiro não existir ou estiver vazio, gerar um novo tabuleiro
      * - Se o tabuleiro já existir no cache, usar o existente
@@ -97,7 +100,6 @@ class MultiplayerGame extends Component
                 $this->board[$position] = $this->selectedPiece['piece'];
                 $this->markCastlingPiecesMoved();
                 $this->executeCastlingMove($position);
-                $this->verifyCheck();
                 $this->handleEnPassantCapture($position);
                 $this->handlePawnPromotion($position);
                 event(new MovedPiece($this->board, $userColor, $this->room['uuid']));
@@ -109,17 +111,25 @@ class MultiplayerGame extends Component
         }
     }
 
+    /**
+     * handleMovedPiece
+     * é chamado quando o jogador movimenta uma peça
+     *
+     * @param array $data
+     * @return void
+     */
     #[On('movedPieceReceived')]
-    public function handleMovedPiece($data)
+    public function handleMovedPiece(array $data): void
     {
         $this->board = $data['board'];
         $this->room['board'] = $data['board'];
         $this->room['turn'] = $data['from'] != $this->user['color'] ? 'branco' : 'preto';
         $this->turn = $data['from'] != $this->user['color'];
         Cache::put('game-match-' . $this->room['uuid'], $this->room);
+        $this->verifyCheck();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.multiplayer-game');
     }
