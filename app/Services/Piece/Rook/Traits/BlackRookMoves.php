@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Services\Piece\Queen\Trait;
+namespace App\Services\Piece\Rook\Traits;
 
-trait BlackQueenMoves
+trait BlackRookMoves
 {
     /**
-     * Summary of getBlackQueenRightMoves
+     * Summary of getBlackRookRightMoves
      * @param array $board
      * @param int $number
      * @param int $indexOfAbc
      * @return string[]
      */
-    public static function getBlackQueenRightMoves(array $board, int $number, int $indexOfAbc): array
+    public static function getBlackRookRightMoves(array $board, int $number, int $indexOfAbc): array
     {
         $possibilities = [];
 
@@ -31,13 +31,13 @@ trait BlackQueenMoves
     }
 
     /**
-     * Summary of getBlackQueenLeftMoves
+     * Summary of getBlackRookLeftMoves
      * @param array $board
      * @param int $number
      * @param int $indexOfAbc
      * @return string[]
      */
-    public static function getBlackQueenLeftMoves(array $board, int $number, int $indexOfAbc): array
+    public static function getBlackRookLeftMoves(array $board, int $number, int $indexOfAbc): array
     {
         $possibilities = [];
 
@@ -57,13 +57,13 @@ trait BlackQueenMoves
     }
 
     /**
-     * Summary of getBlackQueenLowerMoves
+     * Summary of getBlackRookLowerMoves
      * @param array $board
      * @param int $number
      * @param string $letter
      * @return string[]
      */
-    public static function getBlackQueenLowerMoves(array $board, int $number, string $letter): array
+    public static function getBlackRookLowerMoves(array $board, int $number, string $letter): array
     {
         $possibilities = [];
 
@@ -83,13 +83,13 @@ trait BlackQueenMoves
     }
 
     /**
-     * Summary of getBlackQueenUpperMoves
+     * Summary of getBlackRookUpperMoves
      * @param array $board
      * @param int $number
      * @param string $letter
      * @return string[]
      */
-    public static function getBlackQueenUpperMoves(array $board, int $number, string $letter): array
+    public static function getBlackRookUpperMoves(array $board, int $number, string $letter): array
     {
         $possibilities = [];
 

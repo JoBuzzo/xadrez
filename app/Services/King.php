@@ -122,10 +122,10 @@ class King extends Piece
     /**
      * Para fazer o roque, simplesmente mova o rei duas casas para esquerda ou direita. A torre saltará sobre o rei em direção ao lado oposto automaticamente!
      *
-     * Você não pode fazer o roque sempre que quiser, no entanto. Aqui estão as regras do roque:    
+     * Você não pode fazer o roque sempre que quiser, no entanto. Aqui estão as regras do roque:
      *
      * Seu rei não pode ter se movido! Uma vez que seu rei seja movido, você não pode mais fazer o roque,
-     * mesmo que você mova o rei de volta para a sua casa inicial. 
+     * mesmo que você mova o rei de volta para a sua casa inicial.
      * Muitas estratégias envolvem forçar o rei do oponente a se mover por esta razão!
      *
      * A sua torre não pode ter sido movida! Se você mover sua torre,
@@ -143,7 +143,7 @@ class King extends Piece
     private static function roque($board, $position, $piece)
     {
         //Roque menor
-        //verificar se as casas f1 e g1 estão vazias 
+        //verificar se as casas f1 e g1 estão vazias
         if (
             $position == 'e1' && ChessPiece::getColor($piece) == ChessPieceColor::WHITE
             && $board['h1'] == parent::$pieces['brancas'][0]
@@ -163,7 +163,7 @@ class King extends Piece
         }
 
         //Roque maior
-        //verificar se as casas f1 e g1 estão vazias 
+        //verificar se as casas f1 e g1 estão vazias
         if (
             $position == 'e1' && ChessPiece::getColor($piece) == ChessPieceColor::WHITE
             && $board['a1'] == parent::$pieces['brancas'][0]

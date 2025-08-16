@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Piece\Rook\Trait;
+namespace App\Services\Piece\Rook\Traits;
 
 trait WhiteRookMoves
 {

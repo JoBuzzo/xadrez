@@ -3,9 +3,9 @@
 namespace App\Services\Piece\Queen;
 
 use App\Services\Piece\Piece;
-use App\Services\Piece\Queen\Trait\BlackQueenMoves;
-use App\Services\Piece\Queen\Trait\QueenMoves;
-use App\Services\Piece\Queen\Trait\WhiteQueenMoves;
+use App\Services\Piece\Queen\Traits\BlackQueenMoves;
+use App\Services\Piece\Queen\Traits\QueenMoves;
+use App\Services\Piece\Queen\Traits\WhiteQueenMoves;
 
 class QueenService extends Piece
 {

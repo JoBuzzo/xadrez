@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Piece\Queen\Trait;
+namespace App\Services\Piece\Queen\Traits;
 
 trait QueenMoves
 {

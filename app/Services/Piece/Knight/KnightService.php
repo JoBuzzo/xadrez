@@ -2,7 +2,7 @@
 
 namespace App\Services\Piece\Knight;
 
-use App\Services\Piece\Knight\Trait\KnightMoves;
+use App\Services\Piece\Knight\Traits\KnightMoves;
 use App\Services\Piece\Piece;
 
 class KnightService extends Piece

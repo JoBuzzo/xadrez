@@ -1,53 +1,27 @@
 <?php
 
-namespace App\Services\Piece\Rook\Trait;
+namespace App\Services\Piece\Queen\Traits;
 
-trait BlackRookMoves
+trait WhiteQueenMoves
 {
     /**
-     * Summary of getBlackRookRightMoves
+     * Summary of getWhiteQueenRightMoves
      * @param array $board
      * @param int $number
      * @param int $indexOfAbc
      * @return string[]
      */
-    public static function getBlackRookRightMoves(array $board, int $number, int $indexOfAbc): array
-    {
-        $possibilities = [];
-
-        for ($i = $indexOfAbc + 1; $i <= 7; $i++) {
-            if (isset(parent::$abc[$i]) && isset($board[parent::$abc[$i] . $number])) {
-                if (parent::pieceIsBlack($board[parent::$abc[$i] . $number])) {
-                    break;
-                }
-                $possibilities[] = parent::$abc[$i] . $number;
-                if (parent::pieceIsWhite($board[parent::$abc[$i] . $number])) {
-                    break;
-                }
-            }
-        }
-
-        return $possibilities;
-    }
-
-    /**
-     * Summary of getBlackRookLeftMoves
-     * @param array $board
-     * @param int $number
-     * @param int $indexOfAbc
-     * @return string[]
-     */
-    public static function getBlackRookLeftMoves(array $board, int $number, int $indexOfAbc): array
+    public static function getWhiteQueenRightMoves(array $board, int $number, int $indexOfAbc): array
     {
         $possibilities = [];
 
         for ($i = $indexOfAbc - 1; $i >= 0; $i--) {
             if (isset(parent::$abc[$i]) && isset($board[parent::$abc[$i] . $number])) {
-                if (parent::pieceIsBlack($board[parent::$abc[$i] . $number])) {
+                if (parent::pieceIsWhite($board[parent::$abc[$i] . $number])) {
                     break;
                 }
                 $possibilities[] = parent::$abc[$i] . $number;
-                if (parent::pieceIsWhite($board[parent::$abc[$i] . $number])) {
+                if (parent::pieceIsBlack($board[parent::$abc[$i] . $number])) {
                     break;
                 }
             }
@@ -57,23 +31,49 @@ trait BlackRookMoves
     }
 
     /**
-     * Summary of getBlackRookLowerMoves
+     * Summary of getWhiteQueenLeftMoves
+     * @param array $board
+     * @param int $number
+     * @param int $indexOfAbc
+     * @return string[]
+     */
+    public static function getWhiteQueenLeftMoves(array $board, int $number, int $indexOfAbc): array
+    {
+        $possibilities = [];
+
+        for ($i = $indexOfAbc - 1; $i >= 0; $i--) {
+            if (isset(parent::$abc[$i]) && isset($board[parent::$abc[$i] . $number])) {
+                if (parent::pieceIsWhite($board[parent::$abc[$i] . $number])) {
+                    break;
+                }
+                $possibilities[] = parent::$abc[$i] . $number;
+                if (parent::pieceIsBlack($board[parent::$abc[$i] . $number])) {
+                    break;
+                }
+            }
+        }
+
+        return $possibilities;
+    }
+
+    /**
+     * Summary of getWhiteQueenLowerMoves
      * @param array $board
      * @param int $number
      * @param string $letter
      * @return string[]
      */
-    public static function getBlackRookLowerMoves(array $board, int $number, string $letter): array
+    public static function getWhiteQueenLowerMoves(array $board, int $number, string $letter): array
     {
         $possibilities = [];
 
         for ($i = $number - 1; $i >= 1; $i--) {
             if (isset($board[$letter . $i])) {
-                if (parent::pieceIsBlack($board[$letter . $i])) {
+                if (parent::pieceIsWhite($board[$letter . $i])) {
                     break;
                 }
                 $possibilities[] = $letter . $i;
-                if (parent::pieceIsWhite($board[$letter . $i])) {
+                if (parent::pieceIsBlack($board[$letter . $i])) {
                     break;
                 }
             }
@@ -83,23 +83,23 @@ trait BlackRookMoves
     }
 
     /**
-     * Summary of getBlackRookUpperMoves
+     * Summary of getWhiteQueenUpperMoves
      * @param array $board
      * @param int $number
      * @param string $letter
      * @return string[]
      */
-    public static function getBlackRookUpperMoves(array $board, int $number, string $letter): array
+    public static function getWhiteQueenUpperMoves(array $board, int $number, string $letter): array
     {
         $possibilities = [];
 
         for ($i = $number + 1; $i <= 8; $i++) {
             if (isset($board[$letter . $i])) {
-                if (parent::pieceIsBlack($board[$letter . $i])) {
+                if (parent::pieceIsWhite($board[$letter . $i])) {
                     break;
                 }
                 $possibilities[] = $letter . $i;
-                if (parent::pieceIsWhite($board[$letter . $i])) {
+                if (parent::pieceIsBlack($board[$letter . $i])) {
                     break;
                 }
             }

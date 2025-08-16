@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Piece\Knight\Trait;
+namespace App\Services\Piece\Knight\Traits;
 
 trait KnightMoves
 {

@@ -30,44 +30,44 @@ abstract class Piece
         return [];
     }
 
-    public static function pieceIsWhite($piece)
+    public static function pieceIsWhite($piece): bool|string
     {
         return strstr($piece, 'branco');
     }
-    public static function pieceAndUserIsWhite($piece, $userColor)
+    public static function pieceAndUserIsWhite($piece, $userColor): bool
     {
         return strstr($piece, 'branco') && $userColor == 'branco';
     }
 
-    public static function pieceIsBlack($piece)
+    public static function pieceIsBlack($piece): bool|string
     {
         return strstr($piece, 'preta');
     }
-    public static function pieceAndUserIsBlack($piece, $userColor)
+    public static function pieceAndUserIsBlack($piece, $userColor): bool
     {
         return strstr($piece, 'preta') && $userColor == 'preto';
     }
 
-    public static function pieceIsBlackOrWhite($piece)
+    public static function pieceIsBlackOrWhite($piece): bool
     {
         return strstr($piece, 'branco') || strstr($piece, 'preta');
     }
 
 
     //verifica se tem uma peça da mesma cor na casa selecionada, caso não ter a peça é mexida
-    public static function canCaptureOwnPiece($piece, $selectedPiece)
+    public static function canCaptureOwnPiece($piece, $selectedPiece): bool
     {
         return (!self::pieceIsWhite($piece) && self::pieceIsWhite($selectedPiece))
             || (!self::pieceIsBlack($piece) && self::pieceIsBlack($selectedPiece));
     }
 
-    public static function piecesAreOfDifferentColors($piece, $secondPiece)
+    public static function piecesAreOfDifferentColors($piece, $secondPiece): bool
     {
         return (self::pieceIsWhite($piece) && self::pieceIsBlack($secondPiece)
             || self::pieceIsBlack($piece) && self::pieceIsWhite($secondPiece));
     }
 
-    public static function getLetterAndNumber($position)
+    public static function getLetterAndNumber($position): array
     {
         return str_split($position, 1);
     }

@@ -3,8 +3,8 @@
 namespace App\Services\Piece\Rook;
 
 use App\Services\Piece\Piece;
-use App\Services\Piece\Rook\Trait\BlackRookMoves;
-use App\Services\Piece\Rook\Trait\WhiteRookMoves;
+use App\Services\Piece\Rook\Traits\BlackRookMoves;
+use App\Services\Piece\Rook\Traits\WhiteRookMoves;
 
 class RookService extends Piece
 {
