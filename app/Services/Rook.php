@@ -11,7 +11,7 @@ class Rook extends Piece
 
         $index = array_search($letter, self::$abc);
 
-        
+
         $return = [];
 
         if (parent::pieceIsWhite($piece)) {
