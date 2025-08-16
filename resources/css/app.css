@@ -10,6 +10,7 @@
 .w-square {
     width: calc(var(--board-size-sm) / 8);
 }
+
 .h-square {
     height: calc(var(--board-size-sm) / 8);
 }
@@ -24,9 +25,11 @@
         width: var(--board-size-lg);
         height: var(--board-size-lg);
     }
+
     .w-square {
         width: calc(var(--board-size-lg) / 8);
     }
+
     .h-square {
         height: calc(var(--board-size-lg) / 8);
     }
@@ -42,11 +45,28 @@
         width: calc(var(--board-size-lg) / 8);
         height: calc(var(--board-size-lg) / 8);
     }
+
     .w-square {
         width: calc(var(--board-size-lg) / 8);
     }
+
     .h-square {
         height: calc(var(--board-size-lg) / 8);
     }
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.25s ease-out;
+}

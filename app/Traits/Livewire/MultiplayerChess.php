@@ -64,7 +64,7 @@ trait MultiplayerChess
      * Variavel responsável por abrir o modal de substituição do peão
      * @var bool
      */
-    public bool $modal = false;
+    public bool $promotionModal = false;
 
     /**
      * Variavel responsável por salvar a peça selecionada
@@ -142,9 +142,9 @@ trait MultiplayerChess
     public function replacePawn(string $piece): void
     {
         if ($piece == 'rainha' || $piece == 'torre' || $piece == 'bispo' || $piece == 'cavalo') {
-            $color = $this->turn ? 'branco' : 'preta';
+            $color = $this->user['color'] == 'branco' ? 'branco' : 'preta';
             $this->board[$this->replacePosition] = $piece . '_' . $color;
-            $this->modal = false;
+            $this->promotionModal = false;
             $this->turn = !$this->turn;
             $this->replacePosition = null;
         }
@@ -327,7 +327,7 @@ trait MultiplayerChess
         ) {
             //abrir modal de escolher a peça
             $this->replacePosition = $position;
-            $this->modal = true;
+            $this->promotionModal = true;
         } else {
             $this->turn = !$this->turn;
         }

@@ -42,7 +42,7 @@
         </div>
 
         {{-- Modal de promoção --}}
-        <x-chess.promotion-modal :modal="$modal" :color="$user['color'] == 'branco' ? 'branco' : 'preta'" />
+        <x-chess.promotion-modal :promotionModal="$promotionModal" :color="$user['color'] == 'branco' ? 'branco' : 'preta'" />
     @else
         {{-- Esperando o oponente --}}
         <div class="flex flex-col items-center justify-center p-4 font-extrabold text-gray-700">

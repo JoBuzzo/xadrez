@@ -21,7 +21,7 @@ class MultiplayerGame extends Component
 
     public ?string $passant = null;
 
-    public function mount(): void
+    public function mount()
     {
         $roomUuid = request()->get('room');
         $userUuid = request()->get('user');
@@ -30,7 +30,7 @@ class MultiplayerGame extends Component
 
         if (empty($this->room)) {
             session()->flash('error', 'Sala não encontrada');
-            $this->redirect(route('rooms'), true);
+            return $this->redirect(route('rooms'), true);
         }
 
         if (count($this->room['users']) == 2) {
@@ -46,6 +46,8 @@ class MultiplayerGame extends Component
         } else {
             $this->generateBoard();
             $this->turn = $this->room['turn'] == $this->user['color'];
+            $this->promotionModal = isset($this->room['promotion']) ? $this->room['promotion'] && $this->turn : false;
+            $this->replacePosition = isset($this->room['replacePosition']) ? $this->room['replacePosition'] : null;
         }
     }
 
@@ -127,7 +129,10 @@ class MultiplayerGame extends Component
         $this->room['board'] = $data['board'];
         $this->room['turn'] = $data['from'] != $this->user['color'] ? 'branco' : 'preto';
         $this->room['check'] = $this->check;
-        $this->turn = $data['from'] != $this->user['color'];
+        $this->room['promotion'] = $this->promotionModal;
+        $this->room['replacePosition'] = $this->replacePosition;
+        $this->turn = $data['from'] != $this->user['color'] && !$this->promotionModal;
+
         Cache::put('game-match-' . $this->room['uuid'], $this->room);
     }
 
