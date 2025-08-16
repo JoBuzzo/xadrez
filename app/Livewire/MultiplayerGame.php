@@ -69,12 +69,13 @@ class MultiplayerGame extends Component
             Cache::put('game-match-' . $this->room['uuid'], $this->room);
         } else {
             $this->board = $this->room['board'];
+            $this->check = isset($this->room['check']) ? $this->room['check'] : false;
         }
 
         $this->abc = $chess->abc;
     }
 
-    public function move(string $position, string $piece): void
+    public function handleSquareClick(string $position, string $piece): void
     {
         $userColor = $this->user['color'];
         $turn = $this->turn;
@@ -122,11 +123,12 @@ class MultiplayerGame extends Component
     public function handleMovedPiece(array $data): void
     {
         $this->board = $data['board'];
+        $this->verifyCheck();
         $this->room['board'] = $data['board'];
         $this->room['turn'] = $data['from'] != $this->user['color'] ? 'branco' : 'preto';
+        $this->room['check'] = $this->check;
         $this->turn = $data['from'] != $this->user['color'];
         Cache::put('game-match-' . $this->room['uuid'], $this->room);
-        $this->verifyCheck();
     }
 
     public function render(): Factory|View
