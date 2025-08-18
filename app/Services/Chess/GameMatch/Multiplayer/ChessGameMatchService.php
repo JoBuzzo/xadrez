@@ -21,8 +21,8 @@ class ChessGameMatchService
      */
     public function handleSquareClick(string $position, string $piece): void
     {
-        $userColor = $this->room->user['color'];
-        $turn = $this->room->user['turn'];
+        $userColor = $this->room->user->color;
+        $turn = $this->room->user->turn;
         $board = $this->room->board;
 
         $myTurn = $turn && (Piece::pieceAndUserIsWhite($piece, $userColor) || Piece::pieceAndUserIsBlack($piece, $userColor));
@@ -33,8 +33,8 @@ class ChessGameMatchService
             $this->possibilities = MatchPiecesService::matchPieces($board, $position, $piece);
 
             // TODO: Debugar se o movimento especial do peão "passant" está funcionando
-            if ($this->passant) {
-                $this->possibilities[] = $this->passant;
+            if ($this->room->user->passant) {
+                $this->possibilities[] = $this->room->user->passant;
             }
 
             $this->removeCastlingIfInCheck($piece, $position);
@@ -59,7 +59,7 @@ class ChessGameMatchService
 
     /**
      * handleMovedPiece
-     * é chamado quando o jogador movimenta uma peça
+     * é chamado quando o jogador movimenta uma peça (método que vai chamar assim que ouvir um evento)
      *
      * @param array $data
      * @return void
@@ -67,20 +67,18 @@ class ChessGameMatchService
     public function handleMovedPiece(array $data): void
     {
         $this->room->board = $data['board'];
-        $this->whiteKingIsInCheck = MatchPiecesService::checkWhiteKing($this->room->board);
-        $this->blackKingIsInCheck = MatchPiecesService::checkBlackKing($this->room->board);
+        $whiteKingIsInCheck = MatchPiecesService::checkWhiteKing($this->room->board);
+        $blackKingIsInCheck = MatchPiecesService::checkBlackKing($this->room->board);
 
-        $this->room->turn = $data['from'] != $this->room->user['color'] && !$this->promotionModal ? $this->room->oponnent['color'] : $this->room->user['color'];
-        $this->room->user['check'] = $this->userIsWhite() ? $this->whiteKingIsInCheck : $this->blackKingIsInCheck;
-        $this->room->oponnent['check'] = $this->userIsWhite() ? $this->blackKingIsInCheck : $this->whiteKingIsInCheck;
-        $this->room->user['promotion'] = $this->promotionModal;
-        $this->room->user['replacePosition'] = $this->replacePosition;
+        $this->room->turn = $data['from'] != $this->room->user->uuid && !$this->room->user->promotion ? $this->room->oponnent->uuid : $this->room->user->uuid;
+        $this->room->user->check = $this->userIsWhite() ? $whiteKingIsInCheck : $blackKingIsInCheck;
+        $this->room->oponnent->check = $this->userIsWhite() ? $blackKingIsInCheck : $whiteKingIsInCheck;
 
         $room = [
             'uuid' => $this->room->uuid,
             'board' => $this->room->board,
             'turn' => $this->room->turn,
-            'users' => [$this->room->user, $this->room->oponnent]
+            'users' => [$this->room->user->toArray(), $this->room->oponnent->toArray()]
         ];
 
         Cache::put('game-match-' . $room['uuid'], $room);

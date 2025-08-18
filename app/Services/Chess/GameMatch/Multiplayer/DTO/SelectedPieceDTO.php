@@ -5,11 +5,11 @@ namespace App\Services\Chess\GameMatch\Multiplayer\DTO;
 class SelectedPieceDTO
 {
     public function __construct(
-        public string $position,
-        public string $piece,
+        public ?string $position = null,
+        public ?string $piece = null,
     )
     {
-        // 
+        //
     }
 
     public static function fromSquareClick(string $position, string $piece): SelectedPieceDTO
