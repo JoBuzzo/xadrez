@@ -15,7 +15,7 @@ trait WhiteQueenMoves
     {
         $possibilities = [];
 
-        for ($i = $indexOfAbc - 1; $i >= 0; $i--) {
+        for ($i = $indexOfAbc + 1; $i <= 7; $i++) {
             if (isset(parent::$letters[$i]) && isset($board[parent::$letters[$i] . $number])) {
                 if (parent::pieceIsWhite($board[parent::$letters[$i] . $number])) {
                     break;

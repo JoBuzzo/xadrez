@@ -21,8 +21,8 @@ trait BlackPawnMoves
         $oneAhead = $letter . ($number - 1);
         $twoAhead = $letter . ($number - 2);
 
-        $isOneAheadEmpty = $board[$oneAhead] === $oneAhead;
-        $isTwoAheadEmpty = $board[$twoAhead] === $twoAhead;
+        $isOneAheadEmpty = isset($board[$oneAhead]) && $board[$oneAhead] === $oneAhead;
+        $isTwoAheadEmpty = isset($board[$twoAhead]) && $board[$twoAhead] === $twoAhead;
 
         if ($isOnStartingRank && $isOneAheadEmpty && $isTwoAheadEmpty) {
             return [$oneAhead, $twoAhead];
@@ -56,7 +56,7 @@ trait BlackPawnMoves
         }
 
         if ($canCaptureLeft) {
-            $possibilities = parent::$letters[$index - 1] . $number - 1;
+            $possibilities[] = parent::$letters[$index - 1] . $number - 1;
         }
 
         return $possibilities;

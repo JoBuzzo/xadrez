@@ -1,9 +1,9 @@
 @if ($promotionModal)
     @php
-        $queenAsset = "images/rainha_$color.png";
-        $rookAsset = "images/torre_$color.png";
-        $bishopAsset = "images/bispo_$color.png";
-        $knightAsset = "images/cavalo_$color.png";
+        $queenAsset = "images/chess/pieces/{$color}_queen.png";
+        $rookAsset = "images/chess/pieces/{$color}_rook.png";
+        $bishopAsset = "images/chess/pieces/{$color}_bishop.png";
+        $knightAsset = "images/chess/pieces/{$color}_knight.png";
     @endphp
 
     <!-- Fundo escuro -->
@@ -23,16 +23,16 @@
 
             <!-- Peças -->
             <div class="flex items-center justify-center gap-6">
-                <button wire:click='replacePawn("rainha")' class="transition-transform hover:scale-110">
+                <button wire:click='replacePawn("queen")' class="transition-transform hover:scale-110">
                     <img src="{{ asset($queenAsset) }}" alt="Rainha" class="w-14 h-14 md:w-20 md:h-20">
                 </button>
-                <button wire:click='replacePawn("torre")' class="transition-transform hover:scale-110">
+                <button wire:click='replacePawn("rook")' class="transition-transform hover:scale-110">
                     <img src="{{ asset($rookAsset) }}" alt="Torre" class="w-14 h-14 md:w-20 md:h-20">
                 </button>
-                <button wire:click='replacePawn("bispo")' class="transition-transform hover:scale-110">
+                <button wire:click='replacePawn("bishop")' class="transition-transform hover:scale-110">
                     <img src="{{ asset($bishopAsset) }}" alt="Bispo" class="w-14 h-14 md:w-20 md:h-20">
                 </button>
-                <button wire:click='replacePawn("cavalo")' class="transition-transform hover:scale-110">
+                <button wire:click='replacePawn("knight")' class="transition-transform hover:scale-110">
                     <img src="{{ asset($knightAsset) }}" alt="Cavalo" class="w-14 h-14 md:w-20 md:h-20">
                 </button>
             </div>

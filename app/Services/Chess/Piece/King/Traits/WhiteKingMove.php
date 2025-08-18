@@ -18,7 +18,7 @@ trait WhiteKingMove
     {
         if (
             $position == 'e1' && ChessPiece::getColor($piece) == ChessPieceColor::WHITE
-            && $board['h1'] == parent::$pieces['brancas'][0]
+            && $board['h1'] == parent::$pieces['whites'][0]
         ) {
             if ($board['f1'] == 'f1' && $board['g1'] == 'g1') {
                 return ['g1'];
@@ -39,7 +39,7 @@ trait WhiteKingMove
     {
         if (
             $position == 'e1' && ChessPiece::getColor($piece) == ChessPieceColor::WHITE
-            && $board['a1'] == parent::$pieces['brancas'][0]
+            && $board['a1'] == parent::$pieces['whites'][0]
         ) {
             if ($board['b1'] == 'b1' && $board['c1'] == 'c1' && $board['d1'] == 'd1') {
                 return ['c1'];

@@ -6,6 +6,7 @@ use App\Services\Chess\GameMatch\Multiplayer\DTO\SelectedPieceDTO;
 use App\Services\Chess\GameMatch\Multiplayer\DTO\RoomDTO;
 use App\Services\Chess\Piece\Pawn\PawnService;
 use App\Events\SecondPlayerJoined;
+use Illuminate\Support\Facades\Cache;
 
 trait ChessGameMatch
 {
@@ -48,7 +49,7 @@ trait ChessGameMatch
         $whiteKingIsInCheck = $this->userIsWhite() ? $this->room->user->check : $this->room->opponent->check;
         $blackKingIsInCheck = $this->userIsWhite() ? $this->room->opponent->check : $this->room->user->check;
 
-        if ($whiteKingIsInCheck && $piece == 'rei_branco' && $position == 'e1') {
+        if ($whiteKingIsInCheck && $piece == 'white_king' && $position == 'e1') {
             $keysToRemove = array('g1', 'c1');
 
             foreach ($keysToRemove as $value) {
@@ -58,7 +59,7 @@ trait ChessGameMatch
                 }
             }
         }
-        if ($blackKingIsInCheck && $piece == 'rei_preta' && $position == 'e8') {
+        if ($blackKingIsInCheck && $piece == 'black_king' && $position == 'e8') {
             $keysToRemove = array('g8',  'c8');
 
             foreach ($keysToRemove as $value) {
@@ -82,7 +83,7 @@ trait ChessGameMatch
         $whiteUser = $this->userIsWhite() ? $this->room->user : $this->room->opponent;
         $blackUser = $this->userIsWhite() ? $this->room->opponent : $this->room->user;
 
-        if ($whiteUser->kingIsAlreadyMoved && $piece == 'rei_branco' && $position == 'e1') {
+        if ($whiteUser->kingIsAlreadyMoved && $piece == 'white_king' && $position == 'e1') {
             $keysToRemove = [];
             if ($whiteUser->hasQueenSideRookMoved) {
                 array_push($keysToRemove, 'c1');
@@ -99,7 +100,7 @@ trait ChessGameMatch
             }
         }
 
-        if ($blackUser->kingIsAlreadyMoved && $piece == 'rei_preta' && $position == 'e8') {
+        if ($blackUser->kingIsAlreadyMoved && $piece == 'black_king' && $position == 'e8') {
             $keysToRemove = [];
             if ($blackUser->hasQueenSideRookMoved) {
                 array_push($keysToRemove, 'c8');
@@ -165,21 +166,21 @@ trait ChessGameMatch
      */
     private function executeCastlingMove(string $position): void
     {
-        if ($this->selectedPiece->piece == 'rei_branco' && $position == 'g1') {
+        if ($this->selectedPiece->piece == 'white_king' && $position == 'g1') {
             $this->room->board['h1'] = 'h1';
-            $this->room->board['f1'] = 'torre_branco';
+            $this->room->board['f1'] = 'white_rook';
         }
-        if ($this->selectedPiece->piece == 'rei_branco' && $position == 'c1') {
+        if ($this->selectedPiece->piece == 'white_king' && $position == 'c1') {
             $this->room->board['a1'] = 'a1';
-            $this->room->board['d1'] = 'torre_branco';
+            $this->room->board['d1'] = 'white_rook';
         }
-        if ($this->selectedPiece->piece == 'rei_preta' && $position == 'g8') {
+        if ($this->selectedPiece->piece == 'black_king' && $position == 'g8') {
             $this->room->board['h8'] = 'h8';
-            $this->room->board['f8'] = 'torre_preta';
+            $this->room->board['f8'] = 'black_rook';
         }
-        if ($this->selectedPiece->piece == 'rei_preta' && $position == 'c8') {
+        if ($this->selectedPiece->piece == 'blak_king' && $position == 'c8') {
             $this->room->board['a8'] = 'a8';
-            $this->room->board['d8'] = 'torre_preta';
+            $this->room->board['d8'] = 'black_rook';
         }
     }
 
@@ -207,12 +208,13 @@ trait ChessGameMatch
     private function handlePawnPromotion(string $position): void
     {
         if (
-            strstr($this->selectedPiece->piece, 'peao') &&
+            strstr($this->selectedPiece->piece, 'pawn') &&
             (strstr($position, '8') == '8' || strstr($position, '1') == '1')
         ) {
-            //abrir modal de escolher a peça
+            // TODO: precisa salvar esses campos em cache para conseguir efetuar a promossão do Peão
             $this->room->user->replacePosition = $position;
             $this->room->user->promotion = true;
+            $this->loadPromotionOnCache();
         } else {
             $this->room->turn = $this->room->turn == $this->room->user->uuid ? $this->room->opponent->uuid : $this->room->user->uuid;
         }
@@ -234,5 +236,17 @@ trait ChessGameMatch
     private function userIsWhite(): bool
     {
         return $this->room->user->color == 'white';
+    }
+
+    private function loadPromotionOnCache()
+    {
+        $room = [
+            'uuid' => $this->room->uuid,
+            'board' => $this->room->board,
+            'turn' => $this->room->turn,
+            'users' => [$this->room->user->toArray(), $this->room->opponent->toArray()]
+        ];
+
+        Cache::put('game-match-' . $room['uuid'], $room);
     }
 }

@@ -56,6 +56,21 @@ class ChessGameMatch extends Component
         $service->handleMovedPiece($data);
         $this->setData($service);
     }
+
+    public function replacePawn(string $piece)
+    {
+        $service = new ChessGameMatchService(
+            $this->roomUuid,
+            $this->userUuid,
+            $this->canSelectPiece,
+            $this->selectedPiece,
+            $this->possibilities
+        );
+
+        $service->replacePawn($piece);
+        $this->setData($service);
+    }
+
     private function setData(ChessGameMatchService $service): void
     {
         $this->room = $service->getRoom();

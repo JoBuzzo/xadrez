@@ -1,8 +1,6 @@
 <?php
 
 use App\Livewire\Chess\GameMatch\Multiplayer\ChessGameMatch;
-use App\Livewire\GameChess;
-use App\Livewire\MultiplayerGame;
 use App\Livewire\Room;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/partida', GameChess::class)->name('game.chess');
 Route::get('/multiplayer/partida', ChessGameMatch::class)->name('multiplayer.game.chess');
 Route::get('/', Room::class)->name('rooms');
+
+/**
+ * TODO:
+ * - ajustar roque, (não permitir que o roque coloque o rei em cheque)
+ * - testar movimento "en passant" e arrumar caso necessário
+ * - implemetar fim do jogo (rei capturado ou desistencia)
+ */

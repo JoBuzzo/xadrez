@@ -157,11 +157,14 @@ class ChessGameMatchService
         $whiteKingIsInCheck = MatchPiecesService::checkWhiteKing($this->room->board);
         $blackKingIsInCheck = MatchPiecesService::checkBlackKing($this->room->board);
 
-        $playedByUser = $data['from'] === $this->room->user->uuid;
-        $this->room->user->turn = ! $playedByUser;
-        $this->room->opponent->turn = $playedByUser;
+        if (!$this->room->user->promotion && !$this->room->opponent->promotion) {
 
-        $this->room->turn = $playedByUser ? $this->room->opponent->uuid : $this->room->user->uuid;
+            $playedByUser = $data['from'] === $this->room->user->uuid;
+            $this->room->user->turn = ! $playedByUser;
+            $this->room->opponent->turn = $playedByUser;
+
+            $this->room->turn = $playedByUser ? $this->room->opponent->uuid : $this->room->user->uuid;
+        }
 
         $this->room->user->check = $this->userIsWhite() ? $whiteKingIsInCheck : $blackKingIsInCheck;
         $this->room->opponent->check = $this->userIsWhite() ? $blackKingIsInCheck : $whiteKingIsInCheck;
@@ -174,5 +177,17 @@ class ChessGameMatchService
         ];
 
         Cache::put('game-match-' . $room['uuid'], $room);
+    }
+
+    public function replacePawn(string $piece): void
+    {
+        if ($piece == 'queen' || $piece == 'rook' || $piece == 'bishop' || $piece == 'knight') {
+            $this->room->board[$this->room->user->replacePosition] = $this->room->user->color . '_' . $piece;
+            $this->room->user->replacePosition = null;
+            $this->room->user->promotion = false;
+            $this->room->turn = $this->room->opponent->uuid;
+            $this->loadPromotionOnCache();
+            event(new MovedPiece($this->room->board, $this->room->user->uuid, $this->room->uuid));
+        }
     }
 }

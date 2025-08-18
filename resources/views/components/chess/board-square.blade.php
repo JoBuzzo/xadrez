@@ -31,7 +31,7 @@
             @if ($isSelectedPiece)
                 <span class="absolute inset-0 bg-[#7B61FF] pointer-events-none opacity-50"></span>
             @elseif ($isPossibility)
-                <span class="absolute  bg-[#7B61FF] pointer-events-none size-6 rounded-full opacity-50"></span>
+                <span class="absolute bg-[#7B61FF] pointer-events-none size-6 rounded-full opacity-50 z-50"></span>
             @endif
 
             @if ($isPiece)

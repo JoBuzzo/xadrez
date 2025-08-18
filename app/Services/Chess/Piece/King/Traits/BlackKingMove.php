@@ -18,7 +18,7 @@ trait BlackKingMove
     {
         if (
             $position == 'e8' && ChessPiece::getColor($piece) == ChessPieceColor::BLACK
-            && $board['h8'] == parent::$pieces['pretas'][0]
+            && $board['h8'] == parent::$pieces['blacks'][0]
         ) {
             if ($board['f8'] == 'f8' && $board['g8'] == 'g8') {
                 return ['g8'];
@@ -39,7 +39,7 @@ trait BlackKingMove
     {
         if (
             $position == 'e8' && ChessPiece::getColor($piece) == ChessPieceColor::BLACK
-            && $board['a8'] == parent::$pieces['pretas'][0]
+            && $board['a8'] == parent::$pieces['blacks'][0]
         ) {
             if ($board['b8'] == 'b8' && $board['c8'] == 'c8' && $board['d8'] == 'd8') {
                 return ['c8'];
