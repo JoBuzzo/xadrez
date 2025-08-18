@@ -137,6 +137,8 @@ class UserDTO
             'waitingForOpponent' => $this->waitingForOpponent,
             'promotion' => $this->promotion,
             'replacePosition' => $this->replacePosition,
+            'pawnPosition' => $this->pawnPosition,
+            'passant' => $this->passant,
             'turn' => $this->turn,
             'kingIsAlreadyMoved' => $this->kingIsAlreadyMoved,
             'hasKingSideRookMoved' => $this->hasKingSideRookMoved,

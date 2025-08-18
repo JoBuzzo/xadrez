@@ -2,9 +2,9 @@
 
 namespace App\Services\Chess\GameMatch\Multiplayer\DTO;
 
-use App\Enums\Turn;
-use App\Services\Chess;
 use Illuminate\Support\Facades\Cache;
+use App\Services\Chess;
+use App\Enums\Turn;
 
 class RoomDTO
 {
@@ -14,12 +14,12 @@ class RoomDTO
         public array $users,
         public array $board,
         public ?UserDTO $user = null,
-        public ?UserDTO $oponnent = null
+        public ?UserDTO $opponent = null
     ) {}
 
-    public static function fromCache(): RoomDTO
+    public static function fromCache(string $roomUuid, string $userUuid): RoomDTO
     {
-        $room = self::makeRoom();
+        $room = self::makeRoom($roomUuid, $userUuid);
 
         return new self(
             uuid: $room['uuid'],
@@ -27,16 +27,32 @@ class RoomDTO
             turn: $room['turn'],
             board: $room['board'],
             user: $room['user'],
-            oponnent: $room['oponnent']
+            opponent: $room['opponent']
         );
     }
 
-    private static function makeRoom()
+    public function toArray(): array
     {
-        $roomUuid = request()->get('room');
-        $userUuid = request()->get('user');
+        $user = $this->user->toArray();
+        $opponent = $this->opponent?->toArray();
 
+        return [
+            'uuid' => $this->uuid,
+            'users' => [$user, $opponent],
+            'turn' => $this->turn,
+            'board' => $this->board,
+            'user' => $user,
+            'opponent' => $opponent
+        ];
+    }
+
+    private static function makeRoom(string $roomUuid, string $userUuid): mixed
+    {
         $room = Cache::get('game-match-' . $roomUuid, []);
+
+        if(!$room){
+            throw new \Exception('Room not found');
+        }
 
         if (count($room['users']) == 1) {
             // Caso tiver apenas um usuário, ele vai estar esperando a entrada do oponente
@@ -45,7 +61,8 @@ class RoomDTO
             $data['waitingForOpponent'] = true;
             $data['turn'] = Turn::isTurn($data['color']);
             $data['replacePosition'] = null;
-            $data['pawnPossiton'] = null;
+            $data['pawnPosition'] = null;
+            $data['passant'] = null;
             $data['promotion'] = false;
             $data['check'] = false;
             $data['kingIsAlreadyMoved'] = false;
@@ -55,9 +72,10 @@ class RoomDTO
             $user = UserDTO::makeUser($data);
 
             $room['user'] = $user;
+            $room['opponent'] = null;
             $room['users'] = [$user];
+            $room['board'] = [];
             $room['turn'] = $user->turn ? $user->uuid : null;
-
         } else if (count($room['users']) == 2) {
             // Caso tiver dois usuários, e ainda não começaram a jogar (tabuleiro vazio)
             if (!isset($room['board']) || (isset($room['board']) && $room['board'] == [])) {
@@ -66,7 +84,7 @@ class RoomDTO
                 $data['waitingForOpponent'] = false;
                 $data['turn'] = Turn::isTurn($data['color']);
                 $data['replacePosition'] = null;
-                $data['pawnPossiton'] = null;
+                $data['pawnPosition'] = null;
                 $data['passant'] = null;
                 $data['promotion'] = false;
                 $data['check'] = false;
@@ -81,7 +99,7 @@ class RoomDTO
                 $data['waitingForOpponent'] = false;
                 $data['turn'] = Turn::isTurn($data['color']);
                 $data['replacePosition'] = null;
-                $data['pawnPossiton'] = null;
+                $data['pawnPosition'] = null;
                 $data['passant'] = null;
                 $data['promotion'] = false;
                 $data['check'] = false;
@@ -89,23 +107,21 @@ class RoomDTO
                 $data['hasKingSideRookMoved'] = false;
                 $data['hasQueenSideRookMoved'] = false;
 
-                $oponnent = UserDTO::makeUser($data);
-                $room['oponnent'] = $oponnent;
-                $room['users'] = [$user, $oponnent];
-                $room['turn'] = $user->turn ? $user->uuid : $oponnent->uuid;
+                $opponent = UserDTO::makeUser($data);
+                $room['opponent'] = $opponent;
+                $room['users'] = [$user, $opponent];
+                $room['turn'] = $user->turn ? $user->uuid : $opponent->uuid;
 
                 $chess = new Chess;
 
                 $chess->generateBoard();
                 $chess->positionPieces();
                 $room['board'] = $chess->board;
-            }else{
-                // trocar vez do jogador (pensado em quando o usuário recarrega a página)
+            } else {
+                //pensado em quando o usuário recarrega a página
                 $room['user'] = UserDTO::makeUser(collect($room['users'])->firstWhere('uuid', $userUuid));
-                $room['oponnent'] = UserDTO::makeUser(collect($room['users'])->firstWhere('uuid', '<>', $userUuid));
-                $room['user']->turn = !$room['user']->turn;
-                $room['oponnent']->turn = !$room['oponnent']->turn;
-                $room['turn'] = $room['user']->turn ? $room['user']->uuid : $room['oponnent']->uuid;
+
+                $room['opponent'] = UserDTO::makeUser(collect($room['users'])->firstWhere('uuid', '<>', $userUuid));
             }
         }
 

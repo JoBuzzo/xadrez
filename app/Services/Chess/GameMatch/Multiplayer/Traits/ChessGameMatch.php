@@ -2,23 +2,30 @@
 
 namespace App\Services\Chess\GameMatch\Multiplayer\Traits;
 
-use App\Events\SecondPlayerJoined;
-use App\Services\Chess\GameMatch\Multiplayer\DTO\RoomDTO;
 use App\Services\Chess\GameMatch\Multiplayer\DTO\SelectedPieceDTO;
+use App\Services\Chess\GameMatch\Multiplayer\DTO\RoomDTO;
 use App\Services\Chess\Piece\Pawn\PawnService;
+use App\Events\SecondPlayerJoined;
 
 trait ChessGameMatch
 {
-    public function __construct()
-    {
-        $this->room = RoomDTO::fromCache();
-        $this->notifySecondPlayerJoined();
-    }
     /**
      * Summary of room
      * @var RoomDTO
      */
-    public RoomDTO $room;
+    private RoomDTO $room;
+
+    /**
+     * Variavel responsável por salvar as possibilidades de movimento da peça selecionada
+     * @var array
+     */
+    private array $possibilities = [];
+
+    /**
+     * Summary of selectedPiece
+     * @var SelectedPieceDTO
+     */
+    private ?SelectedPieceDTO $selectedPiece = null;
 
     /**
      * Variavel responsável por verificar se o usuário está selecionando uma peça
@@ -27,25 +34,8 @@ trait ChessGameMatch
      * true = o usuário pode selecionar uma peça
      * false = o usuário movimenta a peça selecionada ou desseleciona outra peça
      */
-    public bool $canSelectPiece = true;
+    private bool $canSelectPiece = true;
 
-    /**
-     * Summary of selectedPiece
-     * @var SelectedPieceDTO
-     */
-    public ?SelectedPieceDTO $selectedPiece = null;
-
-    /**
-     * Variavel responsável por salvar as possibilidades de movimento da peça selecionada
-     * @var array
-     */
-    public array $possibilities = [];
-
-    /**
-     * Variavel responsável por salvar o tabuleiro
-     * @var array
-     */
-    public array $board = [];
 
     /**
      * Remover a opção de realizar roque caso de check
@@ -55,8 +45,8 @@ trait ChessGameMatch
      */
     private function removeCastlingIfInCheck(string $piece, string $position): void
     {
-        $whiteKingIsInCheck = $this->userIsWhite() ? $this->room->user->check : $this->room->oponnent->check;
-        $blackKingIsInCheck = $this->userIsWhite() ? $this->room->oponnent->check : $this->room->user->check;
+        $whiteKingIsInCheck = $this->userIsWhite() ? $this->room->user->check : $this->room->opponent->check;
+        $blackKingIsInCheck = $this->userIsWhite() ? $this->room->opponent->check : $this->room->user->check;
 
         if ($whiteKingIsInCheck && $piece == 'rei_branco' && $position == 'e1') {
             $keysToRemove = array('g1', 'c1');
@@ -89,8 +79,8 @@ trait ChessGameMatch
     private function revokeCastlingRights(string $piece, string $position): void
     {
 
-        $whiteUser = $this->userIsWhite() ? $this->room->user : $this->room->oponnent;
-        $blackUser = $this->userIsWhite() ? $this->room->oponnent : $this->room->user;
+        $whiteUser = $this->userIsWhite() ? $this->room->user : $this->room->opponent;
+        $blackUser = $this->userIsWhite() ? $this->room->opponent : $this->room->user;
 
         if ($whiteUser->kingIsAlreadyMoved && $piece == 'rei_branco' && $position == 'e1') {
             $keysToRemove = [];
@@ -156,15 +146,15 @@ trait ChessGameMatch
         }
 
         if ($this->selectedPiece->piece == 'torre_preta' && $this->selectedPiece->position == 'a8') {
-            $this->room->oponnent->hasQueenSideRookMoved = true;
+            $this->room->opponent->hasQueenSideRookMoved = true;
         }
         if ($this->selectedPiece->piece == 'torre_preta' && $this->selectedPiece->position == 'h8') {
-            $this->room->oponnent->hasKingSideRookMoved = true;
+            $this->room->opponent->hasKingSideRookMoved = true;
         }
         if ($this->selectedPiece->piece == 'rei_preta') {
-            $this->room->oponnent->kingIsAlreadyMoved = true;
-            $this->room->oponnent->hasQueenSideRookMoved = true;
-            $this->room->oponnent->hasKingSideRookMoved = true;
+            $this->room->opponent->kingIsAlreadyMoved = true;
+            $this->room->opponent->hasQueenSideRookMoved = true;
+            $this->room->opponent->hasKingSideRookMoved = true;
         }
     }
 
@@ -176,20 +166,20 @@ trait ChessGameMatch
     private function executeCastlingMove(string $position): void
     {
         if ($this->selectedPiece->piece == 'rei_branco' && $position == 'g1') {
-            $this->board['h1'] = 'h1';
-            $this->board['f1'] = 'torre_branco';
+            $this->room->board['h1'] = 'h1';
+            $this->room->board['f1'] = 'torre_branco';
         }
         if ($this->selectedPiece->piece == 'rei_branco' && $position == 'c1') {
-            $this->board['a1'] = 'a1';
-            $this->board['d1'] = 'torre_branco';
+            $this->room->board['a1'] = 'a1';
+            $this->room->board['d1'] = 'torre_branco';
         }
         if ($this->selectedPiece->piece == 'rei_preta' && $position == 'g8') {
-            $this->board['h8'] = 'h8';
-            $this->board['f8'] = 'torre_preta';
+            $this->room->board['h8'] = 'h8';
+            $this->room->board['f8'] = 'torre_preta';
         }
         if ($this->selectedPiece->piece == 'rei_preta' && $position == 'c8') {
-            $this->board['a8'] = 'a8';
-            $this->board['d8'] = 'torre_preta';
+            $this->room->board['a8'] = 'a8';
+            $this->room->board['d8'] = 'torre_preta';
         }
     }
 
@@ -201,9 +191,9 @@ trait ChessGameMatch
     private function handleEnPassantCapture(string $position): void
     {
         if ($position == $this->room->user->passant) {
-            $this->board[$this->room->user->pawnPosition] = $this->room->user->pawnPosition;
+            $this->room->board[$this->room->user->pawnPosition] = $this->room->user->pawnPosition;
         }
-        $this->room->user->passant = PawnService::enPassant($this->board, $this->selectedPiece->position, $position);
+        $this->room->user->passant = PawnService::enPassant($this->room->board, $this->selectedPiece->position, $position);
         if ($this->room->user->passant) {
             $this->room->user->pawnPosition = $position;
         }
@@ -224,10 +214,9 @@ trait ChessGameMatch
             $this->room->user->replacePosition = $position;
             $this->room->user->promotion = true;
         } else {
-            $this->room->turn = $this->room->turn == $this->room->user->uuid ? $this->room->oponnent->uuid : $this->room->user->uuid;
+            $this->room->turn = $this->room->turn == $this->room->user->uuid ? $this->room->opponent->uuid : $this->room->user->uuid;
         }
     }
-
 
     /**
      * Atualiza a página do primeiro jogador que está esperando o segundo jogador entrar
@@ -237,8 +226,8 @@ trait ChessGameMatch
      */
     private function notifySecondPlayerJoined(): void
     {
-        if (!isset($this->room->board) || (isset($this->room->board) && $this->room->board == [])) {
-            event(new SecondPlayerJoined($this->room->uuid, $this->room->oponnent->uuid));
+        if (!isset($this->room->board) || (isset($this->room->board) && $this->room->board == [] && $this->room->opponent?->uuid)) {
+            event(new SecondPlayerJoined($this->room->uuid, $this->room->opponent->uuid));
         }
     }
 
