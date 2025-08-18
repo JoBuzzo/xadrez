@@ -52,7 +52,7 @@ class KingService extends Piece
     {
         [$letter, $number] = parent::getLetterAndNumber($position);
 
-        $indexOfAbc = array_search($letter, parent::$abc);
+        $indexOfAbc = array_search($letter, parent::$letters);
 
         $possibilities = array_merge(
             self::getUpperMove($board, $number, $letter, $piece),

@@ -2,8 +2,8 @@
 
 namespace App\Services\Chess\GameMatch\Multiplayer\DTO;
 
+use App\Services\Chess\GenerateBoardService;
 use Illuminate\Support\Facades\Cache;
-use App\Services\Chess;
 use App\Enums\Turn;
 
 class RoomDTO
@@ -53,7 +53,6 @@ class RoomDTO
         if(!$room){
             throw new \Exception('Room not found');
         }
-
         if (count($room['users']) == 1) {
             // Caso tiver apenas um usuário, ele vai estar esperando a entrada do oponente
 
@@ -112,11 +111,9 @@ class RoomDTO
                 $room['users'] = [$user, $opponent];
                 $room['turn'] = $user->turn ? $user->uuid : $opponent->uuid;
 
-                $chess = new Chess;
+                $service = new GenerateBoardService;
+                $room['board'] = $service->getBoard();
 
-                $chess->generateBoard();
-                $chess->positionPieces();
-                $room['board'] = $chess->board;
             } else {
                 //pensado em quando o usuário recarrega a página
                 $room['user'] = UserDTO::makeUser(collect($room['users'])->firstWhere('uuid', $userUuid));

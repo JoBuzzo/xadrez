@@ -19,12 +19,12 @@ trait QueenMoves
         $j = $number;
         for ($i = $indexOfAbc + 1; $i <= 7; $i++) {
             $j++;
-            if (isset($board[parent::$abc[$i] . $j])) {
-                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
-                    $possibilities[] = parent::$abc[$i] . $j;
+            if (isset($board[parent::$letters[$i] . $j])) {
+                if ($board[parent::$letters[$i] . $j] == parent::$letters[$i] . $j) {
+                    $possibilities[] = parent::$letters[$i] . $j;
                 } else {
-                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
-                        $possibilities[] = parent::$abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$i] . $j])) {
+                        $possibilities[] = parent::$letters[$i] . $j;
                     }
                     break;
                 }
@@ -49,12 +49,12 @@ trait QueenMoves
         $j = $number;
         for ($i = $indexOfAbc - 1; $i >= 0; $i--) {
             $j++;
-            if (isset($board[parent::$abc[$i] . $j])) {
-                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
-                    $possibilities[] = parent::$abc[$i] . $j;
+            if (isset($board[parent::$letters[$i] . $j])) {
+                if ($board[parent::$letters[$i] . $j] == parent::$letters[$i] . $j) {
+                    $possibilities[] = parent::$letters[$i] . $j;
                 } else {
-                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
-                        $possibilities[] = parent::$abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$i] . $j])) {
+                        $possibilities[] = parent::$letters[$i] . $j;
                     }
                     break;
                 }
@@ -79,12 +79,12 @@ trait QueenMoves
         $j = $number;
         for ($i = $indexOfAbc + 1; $i <= 7; $i++) {
             $j--;
-            if (isset($board[parent::$abc[$i] . $j])) {
-                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
-                    $possibilities[] = parent::$abc[$i] . $j;
+            if (isset($board[parent::$letters[$i] . $j])) {
+                if ($board[parent::$letters[$i] . $j] == parent::$letters[$i] . $j) {
+                    $possibilities[] = parent::$letters[$i] . $j;
                 } else {
-                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
-                        $possibilities[] = parent::$abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$i] . $j])) {
+                        $possibilities[] = parent::$letters[$i] . $j;
                     }
                     break;
                 }
@@ -109,12 +109,12 @@ trait QueenMoves
         $j = $number;
         for ($i = $indexOfAbc - 1; $i >= 0; $i--) {
             $j--;
-            if (isset($board[parent::$abc[$i] . $j])) {
-                if ($board[parent::$abc[$i] . $j] == parent::$abc[$i] . $j) {
-                    $possibilities[] = parent::$abc[$i] . $j;
+            if (isset($board[parent::$letters[$i] . $j])) {
+                if ($board[parent::$letters[$i] . $j] == parent::$letters[$i] . $j) {
+                    $possibilities[] = parent::$letters[$i] . $j;
                 } else {
-                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$i] . $j])) {
-                        $possibilities[] = parent::$abc[$i] . $j;
+                    if (parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$i] . $j])) {
+                        $possibilities[] = parent::$letters[$i] . $j;
                     }
                     break;
                 }

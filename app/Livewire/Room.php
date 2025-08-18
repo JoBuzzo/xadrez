@@ -51,10 +51,10 @@ class Room extends Component
         $countUsers = count($this->rooms[$index]['users']);
 
         if ($countUsers == 0) {
-            $newUser['color'] = random_int(0, 1) ? 'branco' : 'preto';
+            $newUser['color'] = random_int(0, 1) ? 'white' : 'black';
             $this->rooms[$index]['users'][] = $newUser;
         } else if ($countUsers == 1) {
-            $newUser['color'] = $this->rooms[$index]['users'][0]['color'] == 'branco' ? 'preto' : 'branco';
+            $newUser['color'] = $this->rooms[$index]['users'][0]['color'] == 'white' ? 'black' : 'white';
             $this->rooms[$index]['users'][] = $newUser;
         } else {
             session()->flash('error', 'Sala cheia');
@@ -64,8 +64,6 @@ class Room extends Component
         Cache::put('rooms', $this->rooms);
 
         $room = $this->rooms[$index];
-
-        $room['turn'] = 'branco';
 
         $cachedGameMatch = Cache::get('game-match-' . $room['uuid']);
 

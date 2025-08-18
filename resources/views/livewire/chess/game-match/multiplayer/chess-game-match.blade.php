@@ -3,7 +3,7 @@
         <div class="max-w-[1200px] w-full flex flex-col items-center">
 
             <div class="h-10">
-                @if($user['check'])
+                @if ($user['check'])
                     <span class="px-3 py-1 mt-2 text-sm font-semibold text-yellow-900 bg-yellow-200 rounded-full">
                         Seu Rei está em Cheque!
                     </span>
@@ -21,15 +21,15 @@
                 </div>
 
                 {{-- Tabuleiro --}}
-                <x-chess.full-board :userColor="$user['color']" :board="$board" :selectedPiece="$selectedPiece"
-                    :possibilities="$possibilities" :turn="$user['turn']" />
+                <x-chess.full-board :userColor="$user['color']" :board="$board" :selectedPiece="$selectedPiece" :possibilities="$possibilities"
+                    :turn="$user['turn']" />
 
                 {{-- Lado direito: Jogador --}}
                 <div class="flex flex-col items-center text-center">
                     <span class="text-sm text-gray-500">Você</span>
                     <span class="text-lg font-bold">{{ $user['name'] }}</span>
                     <span class="px-3 py-1 mt-2 text-sm font-semibold text-yellow-900 bg-yellow-200 rounded-full">
-                        {{ $user['turn'] ? "Sua Vez" : "Vez de {$opponent['name']}" }}
+                        {{ $user['turn'] ? 'Sua Vez' : "Vez de {$opponent['name']}" }}
                     </span>
                 </div>
 
@@ -37,7 +37,7 @@
         </div>
 
         {{-- Modal de promoção --}}
-        <x-chess.promotion-modal :promotionModal="$user['promotion']" :color="$user['color'] == 'branco' ? 'branco' : 'preta'" />
+        <x-chess.promotion-modal :promotionModal="$user['promotion']" :color="$user['color'] == 'white' ? 'white' : 'black'" />
     @else
         {{-- Esperando o oponente --}}
         <div class="flex flex-col items-center justify-center p-4 font-extrabold text-gray-700">
@@ -51,7 +51,7 @@
     <script>
         Alpine.effect(() => {
             const roomUuid = '{{ $room['uuid'] }}';
-            const userUuid = '{{ $user['uuid'] ?? '' }}';
+            const userUuid = '{{ $user['uuid'] }}';
 
             const channel = window.Echo.channel('new-move-' + roomUuid);
 

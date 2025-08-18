@@ -16,12 +16,12 @@ trait BlackRookMoves
         $possibilities = [];
 
         for ($i = $indexOfAbc + 1; $i <= 7; $i++) {
-            if (isset(parent::$abc[$i]) && isset($board[parent::$abc[$i] . $number])) {
-                if (parent::pieceIsBlack($board[parent::$abc[$i] . $number])) {
+            if (isset(parent::$letters[$i]) && isset($board[parent::$letters[$i] . $number])) {
+                if (parent::pieceIsBlack($board[parent::$letters[$i] . $number])) {
                     break;
                 }
-                $possibilities[] = parent::$abc[$i] . $number;
-                if (parent::pieceIsWhite($board[parent::$abc[$i] . $number])) {
+                $possibilities[] = parent::$letters[$i] . $number;
+                if (parent::pieceIsWhite($board[parent::$letters[$i] . $number])) {
                     break;
                 }
             }
@@ -42,12 +42,12 @@ trait BlackRookMoves
         $possibilities = [];
 
         for ($i = $indexOfAbc - 1; $i >= 0; $i--) {
-            if (isset(parent::$abc[$i]) && isset($board[parent::$abc[$i] . $number])) {
-                if (parent::pieceIsBlack($board[parent::$abc[$i] . $number])) {
+            if (isset(parent::$letters[$i]) && isset($board[parent::$letters[$i] . $number])) {
+                if (parent::pieceIsBlack($board[parent::$letters[$i] . $number])) {
                     break;
                 }
-                $possibilities[] = parent::$abc[$i] . $number;
-                if (parent::pieceIsWhite($board[parent::$abc[$i] . $number])) {
+                $possibilities[] = parent::$letters[$i] . $number;
+                if (parent::pieceIsWhite($board[parent::$letters[$i] . $number])) {
                     break;
                 }
             }

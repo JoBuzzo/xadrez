@@ -24,7 +24,7 @@ class RookService extends Piece
 
         $possibilities = [];
 
-        $indexOfAbc = array_search($letter, parent::$abc);
+        $indexOfAbc = array_search($letter, parent::$letters);
 
         if (parent::pieceIsWhite($piece)) {
             $possibilities = array_merge(
@@ -34,8 +34,7 @@ class RookService extends Piece
                 self::getWhiteRookLowerMoves($board, $number, $letter),
                 self::getWhiteRookUpperMoves($board, $number, $letter),
             );
-
-        }else if(parent::pieceIsBlack($piece)) {
+        } else if (parent::pieceIsBlack($piece)) {
             $possibilities = array_merge(
                 $possibilities,
                 self::getBlackRookRightMoves($board, $number, $indexOfAbc),

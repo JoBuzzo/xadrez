@@ -23,7 +23,7 @@ class QueenService extends Piece
     public static function possibleMoves(array $board, string $position, string $piece): array
     {
         [$letter, $number] = self::getLetterAndNumber($position);
-        $indexOfAbc = array_search($letter, parent::$abc);
+        $indexOfAbc = array_search($letter, parent::$letters);
 
         $possibilidades = array_merge(
             self::getQueenUpperRightMoves($board, $number, $indexOfAbc, $piece),
@@ -40,7 +40,7 @@ class QueenService extends Piece
                 self::getWhiteQueenLowerMoves($board, $number, $letter),
                 self::getWhiteQueenUpperMoves($board, $number, $letter),
             );
-        }else if(parent::pieceIsBlack($piece)) {
+        } else if (parent::pieceIsBlack($piece)) {
             $possibilidades = array_merge(
                 $possibilidades,
                 self::getBlackQueenRightMoves($board, $number, $indexOfAbc),

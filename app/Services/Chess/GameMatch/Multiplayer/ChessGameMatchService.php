@@ -35,6 +35,73 @@ class ChessGameMatchService
     }
 
     /**
+     * Summary of getRoom
+     * @return array
+     */
+    public function getRoom(): array
+    {
+        return $this->room->toArray();
+    }
+
+    /**
+     * Summary of getBoard
+     * @return array
+     */
+    public function getBoard(): array
+    {
+        return $this->room->board;
+    }
+
+    /**
+     * Summary of getUser
+     * @return array
+     */
+    public function getUser(): array
+    {
+        return $this->room->user->toArray();
+    }
+
+    /**
+     * Summary of getOpponent
+     * @return array
+     */
+    public function getOpponent(): array
+    {
+        if (!$this->room->opponent) {
+            return [];
+        }
+
+        return $this->room->opponent->toArray();
+    }
+
+    /**
+     * Summary of getSelectedPiece
+     * @return array
+     */
+    public function getSelectedPiece(): array
+    {
+        if (!$this->selectedPiece) {
+            return [];
+        }
+
+        return $this->selectedPiece->toArray();
+    }
+
+    public function getCanSelectPiece(): bool
+    {
+        return $this->canSelectPiece;
+    }
+
+    /**
+     * Summary of getPossibilities
+     * @return array
+     */
+    public function getPossibilities(): array
+    {
+        return $this->possibilities;
+    }
+
+    /**
      * Summary of handleSquareClick
      * @param string $position
      * @param string $piece
@@ -107,72 +174,5 @@ class ChessGameMatchService
         ];
 
         Cache::put('game-match-' . $room['uuid'], $room);
-    }
-
-    /**
-     * Summary of getRoom
-     * @return array
-     */
-    public function getRoom(): array
-    {
-        return $this->room->toArray();
-    }
-
-    /**
-     * Summary of getBoard
-     * @return array
-     */
-    public function getBoard(): array
-    {
-        return $this->room->board;
-    }
-
-    /**
-     * Summary of getUser
-     * @return array
-     */
-    public function getUser(): array
-    {
-        return $this->room->user->toArray();
-    }
-
-    /**
-     * Summary of getOpponent
-     * @return array
-     */
-    public function getOpponent(): array
-    {
-        if (!$this->room->opponent) {
-            return [];
-        }
-
-        return $this->room->opponent->toArray();
-    }
-
-    /**
-     * Summary of getSelectedPiece
-     * @return array
-     */
-    public function getSelectedPiece(): array
-    {
-        if (!$this->selectedPiece) {
-            return [];
-        }
-
-        return $this->selectedPiece->toArray();
-    }
-
-    public function getCanSelectPiece(): bool
-    {
-        return $this->canSelectPiece;
-    }
-
-    /**
-     * Summary of getPossibilities
-     * @return array
-     */
-    public function getPossibilities(): array
-    {
-        return $this->possibilities;
     }
 }

@@ -58,12 +58,12 @@ trait KingMoves
      */
     public static function getLeftMove(array $board, int $number, int $indexOfAbc, string $piece): array
     {
-        if (isset(parent::$abc[$indexOfAbc - 1]) && isset($board[parent::$abc[$indexOfAbc - 1] . $number])) {
+        if (isset(parent::$letters[$indexOfAbc - 1]) && isset($board[parent::$letters[$indexOfAbc - 1] . $number])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc - 1] . $number])
-                ||  $board[parent::$abc[$indexOfAbc - 1] . $number] == parent::$abc[$indexOfAbc - 1] . $number
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc - 1] . $number])
+                ||  $board[parent::$letters[$indexOfAbc - 1] . $number] == parent::$letters[$indexOfAbc - 1] . $number
             ) {
-                return [parent::$abc[$indexOfAbc - 1] . $number];
+                return [parent::$letters[$indexOfAbc - 1] . $number];
             }
         }
 
@@ -80,12 +80,12 @@ trait KingMoves
      */
     public static function getRightMove(array $board, int $number, int $indexOfAbc, string $piece): array
     {
-        if (isset(parent::$abc[$indexOfAbc + 1]) && isset($board[parent::$abc[$indexOfAbc + 1] . $number])) {
+        if (isset(parent::$letters[$indexOfAbc + 1]) && isset($board[parent::$letters[$indexOfAbc + 1] . $number])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc + 1] . $number])
-                ||  $board[parent::$abc[$indexOfAbc + 1] . $number] == parent::$abc[$indexOfAbc + 1] . $number
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc + 1] . $number])
+                ||  $board[parent::$letters[$indexOfAbc + 1] . $number] == parent::$letters[$indexOfAbc + 1] . $number
             ) {
-                return [parent::$abc[$indexOfAbc + 1] . $number];
+                return [parent::$letters[$indexOfAbc + 1] . $number];
             }
         }
         return [];
@@ -101,12 +101,12 @@ trait KingMoves
      */
     public static function getUpperRightMove(array $board, int $number, int $indexOfAbc, string $piece): array
     {
-        if (isset(parent::$abc[$indexOfAbc + 1]) && isset($board[parent::$abc[$indexOfAbc + 1] . ($number + 1)])) {
+        if (isset(parent::$letters[$indexOfAbc + 1]) && isset($board[parent::$letters[$indexOfAbc + 1] . ($number + 1)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc + 1] . ($number + 1)])
-                ||  $board[parent::$abc[$indexOfAbc + 1] . ($number + 1)] == parent::$abc[$indexOfAbc + 1] . ($number + 1)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc + 1] . ($number + 1)])
+                ||  $board[parent::$letters[$indexOfAbc + 1] . ($number + 1)] == parent::$letters[$indexOfAbc + 1] . ($number + 1)
             ) {
-                return [parent::$abc[$indexOfAbc + 1] . ($number + 1)];
+                return [parent::$letters[$indexOfAbc + 1] . ($number + 1)];
             }
         }
 
@@ -123,12 +123,12 @@ trait KingMoves
      */
     public static function getUpperLeftMove(array $board, int $number, int $indexOfAbc, string $piece): array
     {
-        if (isset(parent::$abc[$indexOfAbc - 1]) && isset($board[parent::$abc[$indexOfAbc - 1] . ($number + 1)])) {
+        if (isset(parent::$letters[$indexOfAbc - 1]) && isset($board[parent::$letters[$indexOfAbc - 1] . ($number + 1)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc - 1] . ($number + 1)])
-                ||  $board[parent::$abc[$indexOfAbc - 1] . ($number + 1)] == parent::$abc[$indexOfAbc - 1] . ($number + 1)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc - 1] . ($number + 1)])
+                ||  $board[parent::$letters[$indexOfAbc - 1] . ($number + 1)] == parent::$letters[$indexOfAbc - 1] . ($number + 1)
             ) {
-                return [parent::$abc[$indexOfAbc - 1] . ($number + 1)];
+                return [parent::$letters[$indexOfAbc - 1] . ($number + 1)];
             }
         }
 
@@ -145,12 +145,12 @@ trait KingMoves
      */
     public static function getLowerRightMove(array $board, int $number, int $indexOfAbc, string $piece): array
     {
-        if (isset(parent::$abc[$indexOfAbc + 1]) && isset($board[parent::$abc[$indexOfAbc + 1] . ($number - 1)])) {
+        if (isset(parent::$letters[$indexOfAbc + 1]) && isset($board[parent::$letters[$indexOfAbc + 1] . ($number - 1)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc + 1] . ($number - 1)])
-                ||  $board[parent::$abc[$indexOfAbc + 1] . ($number - 1)] == parent::$abc[$indexOfAbc + 1] . ($number - 1)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc + 1] . ($number - 1)])
+                ||  $board[parent::$letters[$indexOfAbc + 1] . ($number - 1)] == parent::$letters[$indexOfAbc + 1] . ($number - 1)
             ) {
-                return [parent::$abc[$indexOfAbc + 1] . ($number - 1)];
+                return [parent::$letters[$indexOfAbc + 1] . ($number - 1)];
             }
         }
 
@@ -167,12 +167,12 @@ trait KingMoves
      */
     public static function getLowerLeftMove(array $board, int $number, int $indexOfAbc, string $piece): array
     {
-        if (isset(parent::$abc[$indexOfAbc - 1]) && isset($board[parent::$abc[$indexOfAbc - 1] . ($number - 1)])) {
+        if (isset(parent::$letters[$indexOfAbc - 1]) && isset($board[parent::$letters[$indexOfAbc - 1] . ($number - 1)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc - 1] . ($number - 1)])
-                ||  $board[parent::$abc[$indexOfAbc - 1] . ($number - 1)] == parent::$abc[$indexOfAbc - 1] . ($number - 1)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc - 1] . ($number - 1)])
+                ||  $board[parent::$letters[$indexOfAbc - 1] . ($number - 1)] == parent::$letters[$indexOfAbc - 1] . ($number - 1)
             ) {
-                return [parent::$abc[$indexOfAbc - 1] . ($number - 1)];
+                return [parent::$letters[$indexOfAbc - 1] . ($number - 1)];
             }
         }
 

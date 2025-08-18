@@ -43,20 +43,20 @@ trait WhitePawnMoves
     {
         $possibilities = [];
 
-        $index = array_search($letter, parent::$abc);
+        $index = array_search($letter, parent::$letters);
 
-        $canCaptureRight = isset(parent::$abc[$index + 1]) && isset($board[parent::$abc[$index + 1] . $number + 1])
-            && parent::pieceIsBlack($board[parent::$abc[$index + 1] . $number + 1]);
+        $canCaptureRight = isset(parent::$letters[$index + 1]) && isset($board[parent::$letters[$index + 1] . $number + 1])
+            && parent::pieceIsBlack($board[parent::$letters[$index + 1] . $number + 1]);
 
-        $canCaptureLeft = isset(parent::$abc[$index - 1]) && isset($board[parent::$abc[$index - 1] . $number + 1])
-            && parent::pieceIsBlack($board[parent::$abc[$index - 1] . $number + 1]);
+        $canCaptureLeft = isset(parent::$letters[$index - 1]) && isset($board[parent::$letters[$index - 1] . $number + 1])
+            && parent::pieceIsBlack($board[parent::$letters[$index - 1] . $number + 1]);
 
         if ($canCaptureRight) {
-            $possibilities[] = parent::$abc[$index + 1] . $number + 1;
+            $possibilities[] = parent::$letters[$index + 1] . $number + 1;
         }
 
         if ($canCaptureLeft) {
-            $possibilities[] = parent::$abc[$index - 1] . $number + 1;
+            $possibilities[] = parent::$letters[$index - 1] . $number + 1;
         }
 
         return $possibilities;
@@ -93,13 +93,13 @@ trait WhitePawnMoves
     public static function getWhitePawnEnPassant(array $board, int $number1, int $number2, string $letter2): string|null
     {
         if ($number1 + 2 == $number2) {
-            $pos = array_search($letter2, parent::$abc);
+            $pos = array_search($letter2, parent::$letters);
 
-            $canCaptureRight = (isset(parent::$abc[$pos + 1]) && isset($board[parent::$abc[$pos + 1] . $number2])) &&
-                ($board[parent::$abc[$pos + 1] . $number2] == ChessPiece::PAWN_BLACK);
+            $canCaptureRight = (isset(parent::$letters[$pos + 1]) && isset($board[parent::$letters[$pos + 1] . $number2])) &&
+                ($board[parent::$letters[$pos + 1] . $number2] == ChessPiece::PAWN_BLACK);
 
-            $canCaptureLeft = (isset(parent::$abc[$pos - 1]) && isset($board[parent::$abc[$pos - 1] . $number2])) &&
-                ($board[parent::$abc[$pos - 1] . $number2] == ChessPiece::PAWN_BLACK);
+            $canCaptureLeft = (isset(parent::$letters[$pos - 1]) && isset($board[parent::$letters[$pos - 1] . $number2])) &&
+                ($board[parent::$letters[$pos - 1] . $number2] == ChessPiece::PAWN_BLACK);
 
             if ($canCaptureRight || $canCaptureLeft) {
                 return $letter2 . ($number1 + 1);

@@ -233,6 +233,6 @@ trait ChessGameMatch
 
     private function userIsWhite(): bool
     {
-        return $this->room->user->color == 'branco';
+        return $this->room->user->color == 'white';
     }
 }

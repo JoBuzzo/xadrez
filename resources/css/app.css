@@ -70,3 +70,15 @@
 .animate-fade-in {
     animation: fadeIn 0.25s ease-out;
 }
+
+.size-piece {
+    width: calc(var(--board-size-sm) / 8 * 0.7);
+    height: calc(var(--board-size-sm) / 8 * 0.7);
+}
+
+@media (min-width: 1024px) {
+    .size-piece {
+        width: calc(var(--board-size-lg) / 8 * 0.7);
+        height: calc(var(--board-size-lg) / 8 * 0.7);
+    }
+}

@@ -40,7 +40,7 @@ class MatchPiecesService
                     case ChessPiece::ROOK_WHITE:
                         $possibilities = RookService::possibleMoves($board, $key, $b);
                         if (in_array($positionKingWhite, $possibilities)) {
-                            $return = true;
+                            return true;
                         }
                         break;
                     case ChessPiece::KNIGHT_WHITE:
@@ -81,7 +81,7 @@ class MatchPiecesService
                     case ChessPiece::ROOK_WHITE:
                         $possibilities = RookService::possibleMoves($board, $key, $b);
                         if (in_array($positionBlackWhite, $possibilities)) {
-                            $return = true;
+                            return true;
                         }
                         break;
                     case ChessPiece::KNIGHT_WHITE:

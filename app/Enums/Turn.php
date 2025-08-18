@@ -4,14 +4,14 @@ namespace App\Enums;
 
 enum Turn: string
 {
-    case WHITE = 'branco';
-    case BLACK = 'preto';
+    case WHITE = 'white';
+    case BLACK = 'black';
 
     public static function getColor(string $turn): self
     {
         return match ($turn) {
-            'branco' => self::WHITE,
-            'preto' => self::BLACK,
+            'white' => self::WHITE,
+            'black' => self::BLACK,
         };
     }
 

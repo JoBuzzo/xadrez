@@ -16,21 +16,21 @@ trait KnightMoves
     {
         $possibilities = [];
 
-        if (isset(parent::$abc[$indexOfAbc + 1]) && isset($board[parent::$abc[$indexOfAbc + 1] . ($number + 2)])) {
+        if (isset(parent::$letters[$indexOfAbc + 1]) && isset($board[parent::$letters[$indexOfAbc + 1] . ($number + 2)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc + 1] . ($number + 2)])
-                || $board[parent::$abc[$indexOfAbc + 1] . ($number + 2)] == parent::$abc[$indexOfAbc + 1] . ($number + 2)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc + 1] . ($number + 2)])
+                || $board[parent::$letters[$indexOfAbc + 1] . ($number + 2)] == parent::$letters[$indexOfAbc + 1] . ($number + 2)
             ) {
-                $possibilities[] = parent::$abc[$indexOfAbc + 1] . ($number + 2);
+                $possibilities[] = parent::$letters[$indexOfAbc + 1] . ($number + 2);
             }
         }
 
-        if (isset(parent::$abc[$indexOfAbc + 2]) && isset($board[parent::$abc[$indexOfAbc + 2] . ($number + 1)])) {
+        if (isset(parent::$letters[$indexOfAbc + 2]) && isset($board[parent::$letters[$indexOfAbc + 2] . ($number + 1)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc + 2] . ($number + 1)])
-                || $board[parent::$abc[$indexOfAbc + 2] . ($number + 1)] == parent::$abc[$indexOfAbc + 2] . ($number + 1)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc + 2] . ($number + 1)])
+                || $board[parent::$letters[$indexOfAbc + 2] . ($number + 1)] == parent::$letters[$indexOfAbc + 2] . ($number + 1)
             ) {
-                $possibilities[] = parent::$abc[$indexOfAbc + 2] . ($number + 1);
+                $possibilities[] = parent::$letters[$indexOfAbc + 2] . ($number + 1);
             }
         }
 
@@ -49,21 +49,21 @@ trait KnightMoves
     {
         $possibilities = [];
 
-        if (isset(parent::$abc[$indexOfAbc - 1]) && isset($board[parent::$abc[$indexOfAbc - 1] . ($number + 2)])) {
+        if (isset(parent::$letters[$indexOfAbc - 1]) && isset($board[parent::$letters[$indexOfAbc - 1] . ($number + 2)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc - 1] . ($number + 2)])
-                ||  $board[parent::$abc[$indexOfAbc - 1] . ($number + 2)] == parent::$abc[$indexOfAbc - 1] . ($number + 2)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc - 1] . ($number + 2)])
+                ||  $board[parent::$letters[$indexOfAbc - 1] . ($number + 2)] == parent::$letters[$indexOfAbc - 1] . ($number + 2)
             ) {
-                $possibilities[] = parent::$abc[$indexOfAbc - 1] . ($number + 2);
+                $possibilities[] = parent::$letters[$indexOfAbc - 1] . ($number + 2);
             }
         }
 
-        if (isset(parent::$abc[$indexOfAbc - 2]) && isset($board[parent::$abc[$indexOfAbc - 2] . ($number + 1)])) {
+        if (isset(parent::$letters[$indexOfAbc - 2]) && isset($board[parent::$letters[$indexOfAbc - 2] . ($number + 1)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc - 2] . ($number + 1)])
-                || $board[parent::$abc[$indexOfAbc - 2] . ($number + 1)] == parent::$abc[$indexOfAbc - 2] . ($number + 1)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc - 2] . ($number + 1)])
+                || $board[parent::$letters[$indexOfAbc - 2] . ($number + 1)] == parent::$letters[$indexOfAbc - 2] . ($number + 1)
             ) {
-                $possibilities[] = parent::$abc[$indexOfAbc - 2] . ($number + 1);
+                $possibilities[] = parent::$letters[$indexOfAbc - 2] . ($number + 1);
             }
         }
 
@@ -82,21 +82,21 @@ trait KnightMoves
     {
         $possibilities = [];
 
-        if (isset(parent::$abc[$indexOfAbc + 1]) && isset($board[parent::$abc[$indexOfAbc + 1] . ($number - 2)])) {
+        if (isset(parent::$letters[$indexOfAbc + 1]) && isset($board[parent::$letters[$indexOfAbc + 1] . ($number - 2)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc + 1] . ($number - 2)])
-                || $board[parent::$abc[$indexOfAbc + 1] . ($number - 2)] == parent::$abc[$indexOfAbc + 1] . ($number - 2)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc + 1] . ($number - 2)])
+                || $board[parent::$letters[$indexOfAbc + 1] . ($number - 2)] == parent::$letters[$indexOfAbc + 1] . ($number - 2)
             ) {
-                $possibilities[] = parent::$abc[$indexOfAbc + 1] . ($number - 2);
+                $possibilities[] = parent::$letters[$indexOfAbc + 1] . ($number - 2);
             }
         }
 
-        if (isset(parent::$abc[$indexOfAbc + 2]) && isset($board[parent::$abc[$indexOfAbc + 2] . ($number - 1)])) {
+        if (isset(parent::$letters[$indexOfAbc + 2]) && isset($board[parent::$letters[$indexOfAbc + 2] . ($number - 1)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc + 2] . ($number - 1)])
-                || $board[parent::$abc[$indexOfAbc + 2] . ($number - 1)] == parent::$abc[$indexOfAbc + 2] . ($number - 1)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc + 2] . ($number - 1)])
+                || $board[parent::$letters[$indexOfAbc + 2] . ($number - 1)] == parent::$letters[$indexOfAbc + 2] . ($number - 1)
             ) {
-                $possibilities[] = parent::$abc[$indexOfAbc + 2] . ($number - 1);
+                $possibilities[] = parent::$letters[$indexOfAbc + 2] . ($number - 1);
             }
         }
 
@@ -115,21 +115,21 @@ trait KnightMoves
     {
         $possibilities = [];
 
-        if (isset(parent::$abc[$indexOfAbc - 1]) && isset($board[parent::$abc[$indexOfAbc - 1] . ($number - 2)])) {
+        if (isset(parent::$letters[$indexOfAbc - 1]) && isset($board[parent::$letters[$indexOfAbc - 1] . ($number - 2)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc - 1] . ($number - 2)])
-                || $board[parent::$abc[$indexOfAbc - 1] . ($number - 2)] == parent::$abc[$indexOfAbc - 1] . ($number - 2)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc - 1] . ($number - 2)])
+                || $board[parent::$letters[$indexOfAbc - 1] . ($number - 2)] == parent::$letters[$indexOfAbc - 1] . ($number - 2)
             ) {
-                $possibilities[] =  parent::$abc[$indexOfAbc - 1] . ($number - 2);
+                $possibilities[] =  parent::$letters[$indexOfAbc - 1] . ($number - 2);
             }
         }
 
-        if (isset(parent::$abc[$indexOfAbc - 2]) && isset($board[parent::$abc[$indexOfAbc - 2] . ($number - 1)])) {
+        if (isset(parent::$letters[$indexOfAbc - 2]) && isset($board[parent::$letters[$indexOfAbc - 2] . ($number - 1)])) {
             if (
-                parent::piecesAreOfDifferentColors($piece, $board[parent::$abc[$indexOfAbc - 2] . ($number - 1)])
-                || $board[parent::$abc[$indexOfAbc - 2] . ($number - 1)] == parent::$abc[$indexOfAbc - 2] . ($number - 1)
+                parent::piecesAreOfDifferentColors($piece, $board[parent::$letters[$indexOfAbc - 2] . ($number - 1)])
+                || $board[parent::$letters[$indexOfAbc - 2] . ($number - 1)] == parent::$letters[$indexOfAbc - 2] . ($number - 1)
             ) {
-                $possibilities[] = parent::$abc[$indexOfAbc - 2] . ($number - 1);
+                $possibilities[] = parent::$letters[$indexOfAbc - 2] . ($number - 1);
             }
         }
 

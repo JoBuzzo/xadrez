@@ -24,9 +24,9 @@ class KnightService extends Piece
 
     public static function possibleMoves(array $board, string $position, string $piece): array
     {
-        [$letter, $number] = str_split($position, 1);
+        [$letter, $number] = parent::getLetterAndNumber($position);
 
-        $index = array_search($letter, parent::$abc);
+        $index = array_search($letter, parent::$letters);
 
         return array_merge(
             self::getKnightUpperRightMoves($board, $number, $index, $piece),
