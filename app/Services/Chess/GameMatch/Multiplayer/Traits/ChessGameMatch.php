@@ -5,7 +5,6 @@ namespace App\Services\Chess\GameMatch\Multiplayer\Traits;
 use App\Services\Chess\GameMatch\Multiplayer\DTO\SelectedPieceDTO;
 use App\Services\Chess\GameMatch\Multiplayer\DTO\RoomDTO;
 use App\Services\Chess\Piece\Pawn\PawnService;
-use App\Events\SecondPlayerJoined;
 use Illuminate\Support\Facades\Cache;
 
 trait ChessGameMatch
@@ -220,19 +219,6 @@ trait ChessGameMatch
             $this->reloadRoomOnCache();
         } else {
             $this->room->turn = $this->room->turn == $this->room->user->uuid ? $this->room->opponent->uuid : $this->room->user->uuid;
-        }
-    }
-
-    /**
-     * Atualiza a página do primeiro jogador que está esperando o segundo jogador entrar
-     * - Se o tabuleiro não existir ou estiver vazio, notifica
-     * - Se o tabuleiro já existir, não faz nada
-     * @return void
-     */
-    private function notifySecondPlayerJoined(): void
-    {
-        if (!isset($this->room->board) || (isset($this->room->board) && $this->room->board == [] && $this->room->opponent?->uuid)) {
-            event(new SecondPlayerJoined($this->room->uuid, $this->room->opponent->uuid));
         }
     }
 

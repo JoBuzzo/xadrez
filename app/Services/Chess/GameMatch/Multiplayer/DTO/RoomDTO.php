@@ -5,6 +5,7 @@ namespace App\Services\Chess\GameMatch\Multiplayer\DTO;
 use App\Services\Chess\GenerateBoardService;
 use Illuminate\Support\Facades\Cache;
 use App\Enums\Turn;
+use App\Events\SecondPlayerJoined;
 
 class RoomDTO
 {
@@ -113,6 +114,9 @@ class RoomDTO
 
                 $service = new GenerateBoardService;
                 $room['board'] = $service->getBoard();
+
+                // atualizar a página do adversário
+                event(new SecondPlayerJoined($room['uuid'], $opponent->uuid));
 
             } else {
                 //pensado em quando o usuário recarrega a página

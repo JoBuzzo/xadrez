@@ -23,7 +23,9 @@ class ChessGameMatchService
     ) {
         $this->room = RoomDTO::fromCache($roomUuid, $userUuid);
 
-        $this->notifySecondPlayerJoined();
+        if(count($this->room->users) == 2){
+            $this->reloadRoomOnCache();
+        }
 
         $this->canSelectPiece = $canSelectPiece;
 
