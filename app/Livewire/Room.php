@@ -20,7 +20,7 @@ class Room extends Component
 
     public function mount()
     {
-        $this->rooms = Cache::remember('rooms', 60 *  60 * 60, function () {
+        $this->rooms = Cache::remember('rooms', 60 * 60, function () {
             return $this->generateRooms();
         });
     }
