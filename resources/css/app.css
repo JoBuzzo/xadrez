@@ -1,3 +1,84 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --board-size-lg: 600px;
+    --board-size-sm: 288px;
+}
+
+.w-square {
+    width: calc(var(--board-size-sm) / 8);
+}
+
+.h-square {
+    height: calc(var(--board-size-sm) / 8);
+}
+
+.size-board {
+    width: var(--board-size-sm);
+    height: var(--board-size-sm);
+}
+
+@media (min-width: 1024px) {
+    .size-board {
+        width: var(--board-size-lg);
+        height: var(--board-size-lg);
+    }
+
+    .w-square {
+        width: calc(var(--board-size-lg) / 8);
+    }
+
+    .h-square {
+        height: calc(var(--board-size-lg) / 8);
+    }
+}
+
+.size-square {
+    width: calc(var(--board-size-sm) / 8);
+    height: calc(var(--board-size-sm) / 8);
+}
+
+@media (min-width: 1024px) {
+    .size-square {
+        width: calc(var(--board-size-lg) / 8);
+        height: calc(var(--board-size-lg) / 8);
+    }
+
+    .w-square {
+        width: calc(var(--board-size-lg) / 8);
+    }
+
+    .h-square {
+        height: calc(var(--board-size-lg) / 8);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.25s ease-out;
+}
+
+.size-piece {
+    width: calc(var(--board-size-sm) / 8 * 0.7);
+    height: calc(var(--board-size-sm) / 8 * 0.7);
+}
+
+@media (min-width: 1024px) {
+    .size-piece {
+        width: calc(var(--board-size-lg) / 8 * 0.7);
+        height: calc(var(--board-size-lg) / 8 * 0.7);
+    }
+}
