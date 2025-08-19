@@ -70,7 +70,6 @@ class KingService extends Piece
             self::getBlackKingBiggerRoque($board, $position, $piece),
         );
 
-        // TODO: debugar método que remove as possibilidades onde coloca o rei em perigo
         $possibilities = self::removePossibilities($board, $position, $piece, $possibilities);
 
         return $possibilities;
