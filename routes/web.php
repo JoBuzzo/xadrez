@@ -21,6 +21,6 @@ Route::get('/', Room::class)->name('rooms');
 /**
  * TODO:
  * - ajustar roque, (não permitir que o roque coloque o rei em cheque)
- * - testar movimento "en passant" e arrumar caso necessário
+ * - implementar movimento que obriga tirar o rei de cheque (não deixar mover o rei para a captura e nem mexer uma peça que não tira o cheque)
  * - implemetar fim do jogo (rei capturado ou desistencia)
  */

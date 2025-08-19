@@ -193,11 +193,15 @@ trait ChessGameMatch
     {
         if ($position == $this->room->user->passant) {
             $this->room->board[$this->room->user->pawnPosition] = $this->room->user->pawnPosition;
+            $this->room->user->pawnPosition = null;
+            $this->room->user->passant = null;
         }
-        $this->room->user->passant = PawnService::enPassant($this->room->board, $this->selectedPiece->position, $position);
-        if ($this->room->user->passant) {
-            $this->room->user->pawnPosition = $position;
+
+        $this->room->opponent->passant = PawnService::enPassant($this->room->board, $this->selectedPiece->position, $position);
+        if ($this->room->opponent->passant) {
+            $this->room->opponent->pawnPosition = $position;
         }
+        $this->reloadRoomOnCache();
     }
 
     /**
@@ -211,10 +215,9 @@ trait ChessGameMatch
             strstr($this->selectedPiece->piece, 'pawn') &&
             (strstr($position, '8') == '8' || strstr($position, '1') == '1')
         ) {
-            // TODO: precisa salvar esses campos em cache para conseguir efetuar a promossão do Peão
             $this->room->user->replacePosition = $position;
             $this->room->user->promotion = true;
-            $this->loadPromotionOnCache();
+            $this->reloadRoomOnCache();
         } else {
             $this->room->turn = $this->room->turn == $this->room->user->uuid ? $this->room->opponent->uuid : $this->room->user->uuid;
         }
@@ -238,7 +241,7 @@ trait ChessGameMatch
         return $this->room->user->color == 'white';
     }
 
-    private function loadPromotionOnCache()
+    private function reloadRoomOnCache(): void
     {
         $room = [
             'uuid' => $this->room->uuid,

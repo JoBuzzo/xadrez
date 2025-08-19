@@ -84,6 +84,7 @@ class ChessGameMatch extends Component
 
     public function render(): Factory|View
     {
+        // dd($this->user);
         return view('livewire.chess.game-match.multiplayer.chess-game-match');
     }
 }

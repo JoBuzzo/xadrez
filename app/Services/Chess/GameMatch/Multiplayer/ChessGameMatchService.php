@@ -119,7 +119,6 @@ class ChessGameMatchService
 
             $this->possibilities = MatchPiecesService::matchPieces($this->room->board, $position, $piece);
 
-            // TODO: Debugar se o movimento especial do peão "passant" está funcionando
             if ($this->room->user->passant) {
                 $this->possibilities[] = $this->room->user->passant;
             }
@@ -186,7 +185,7 @@ class ChessGameMatchService
             $this->room->user->replacePosition = null;
             $this->room->user->promotion = false;
             $this->room->turn = $this->room->opponent->uuid;
-            $this->loadPromotionOnCache();
+            $this->reloadRoomOnCache();
             event(new MovedPiece($this->room->board, $this->room->user->uuid, $this->room->uuid));
         }
     }
