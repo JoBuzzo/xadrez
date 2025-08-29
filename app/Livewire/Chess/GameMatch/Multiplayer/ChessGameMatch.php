@@ -31,7 +31,7 @@ class ChessGameMatch extends Component
 
             $this->setData($service);
         } catch (\Throwable $th) {
-            $this->redirect(route('rooms'), true);
+            // $this->redirect(route('rooms'), true);
         }
     }
 

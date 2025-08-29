@@ -131,6 +131,9 @@ class ChessGameMatchService
         } else if ($turn) {
             if ($this->existsPositionInPossibilities($position)) {
                 $this->room->board[$this->selectedPiece->position] = $this->selectedPiece->position;
+                if(Piece::pieceIsBlackOrWhite($this->room->board[$position])){
+                    $this->room->user->capturedPieces[] = $this->room->board[$position];
+                }
                 $this->room->board[$position] = $this->selectedPiece->piece;
                 $this->markCastlingPiecesMoved();
                 $this->executeCastlingMove($position);

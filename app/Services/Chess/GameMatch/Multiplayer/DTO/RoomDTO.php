@@ -68,6 +68,7 @@ class RoomDTO
             $data['kingIsAlreadyMoved'] = false;
             $data['hasKingSideRookMoved'] = false;
             $data['hasQueenSideRookMoved'] = false;
+            $data['capturedPieces'] = [];
 
             $user = UserDTO::makeUser($data);
 
@@ -91,6 +92,8 @@ class RoomDTO
                 $data['kingIsAlreadyMoved'] = false;
                 $data['hasKingSideRookMoved'] = false;
                 $data['hasQueenSideRookMoved'] = false;
+                $data['capturedPieces'] = [];
+
 
                 $user = UserDTO::makeUser($data);
                 $room['user'] = $user;
@@ -106,6 +109,8 @@ class RoomDTO
                 $data['kingIsAlreadyMoved'] = false;
                 $data['hasKingSideRookMoved'] = false;
                 $data['hasQueenSideRookMoved'] = false;
+                $data['capturedPieces'] = [];
+
 
                 $opponent = UserDTO::makeUser($data);
                 $room['opponent'] = $opponent;

@@ -78,6 +78,8 @@ class UserDTO
      */
     public bool $hasQueenSideRookMoved = false;
 
+    public array $capturedPieces = [];
+
     public function __construct(
         string $uuid,
         string $name,
@@ -91,7 +93,8 @@ class UserDTO
         bool $turn,
         bool $kingIsAlreadyMoved,
         bool $hasKingSideRookMoved,
-        bool $hasQueenSideRookMoved
+        bool $hasQueenSideRookMoved,
+        array $capturedPieces
     ) {
         $this->uuid = $uuid;
         $this->name = $name;
@@ -106,6 +109,7 @@ class UserDTO
         $this->kingIsAlreadyMoved = $kingIsAlreadyMoved;
         $this->hasKingSideRookMoved = $hasKingSideRookMoved;
         $this->hasQueenSideRookMoved = $hasQueenSideRookMoved;
+        $this->capturedPieces = $capturedPieces;
     }
 
     public static function makeUser(array $data): UserDTO
@@ -123,7 +127,8 @@ class UserDTO
             turn: $data['turn'],
             kingIsAlreadyMoved: $data['kingIsAlreadyMoved'],
             hasKingSideRookMoved: $data['hasKingSideRookMoved'],
-            hasQueenSideRookMoved: $data['hasQueenSideRookMoved']
+            hasQueenSideRookMoved: $data['hasQueenSideRookMoved'],
+            capturedPieces: $data['capturedPieces']
         );
     }
 
@@ -142,7 +147,8 @@ class UserDTO
             'turn' => $this->turn,
             'kingIsAlreadyMoved' => $this->kingIsAlreadyMoved,
             'hasKingSideRookMoved' => $this->hasKingSideRookMoved,
-            'hasQueenSideRookMoved' => $this->hasQueenSideRookMoved
+            'hasQueenSideRookMoved' => $this->hasQueenSideRookMoved,
+            'capturedPieces' => $this->capturedPieces
         ];
     }
 }

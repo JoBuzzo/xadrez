@@ -12,32 +12,29 @@
                 @endif
             </div>
 
-            <div class="flex flex-col items-center justify-between w-full gap-4 mx-auto sm:flex-row ">
+            <div class="flex flex-col items-start justify-between w-full gap-4 mx-auto sm:flex-row">
 
-                {{-- Lado esquerdo: Oponente --}}
-                <div class="flex flex-col items-center text-center">
-                    <span class="text-sm text-gray-500">Oponente</span>
-                    <span class="text-lg font-bold">{{ $opponent['name'] }}</span>
-                </div>
+                {{-- Oponente --}}
+
+                <x-chess.opponent :opponent="$opponent" />
 
                 {{-- Tabuleiro --}}
-                <x-chess.full-board :userColor="$user['color']" :board="$board" :selectedPiece="$selectedPiece" :possibilities="$possibilities"
-                    :turn="$user['turn']" />
+                <x-chess.full-board
+                    :userColor="$user['color']"
+                    :board="$board"
+                    :selectedPiece="$selectedPiece"
+                    :possibilities="$possibilities"
+                    :turn="$user['turn']"
+                />
 
-                {{-- Lado direito: Jogador --}}
-                <div class="flex flex-col items-center text-center">
-                    <span class="text-sm text-gray-500">Você</span>
-                    <span class="text-lg font-bold">{{ $user['name'] }}</span>
-                    <span class="px-3 py-1 mt-2 text-sm font-semibold text-yellow-900 bg-yellow-200 rounded-full">
-                        {{ $user['turn'] ? 'Sua Vez' : "Vez de {$opponent['name']}" }}
-                    </span>
-                </div>
+                {{-- Jogador --}}
+                <x-chess.player :user="$user" />
 
             </div>
         </div>
 
         {{-- Modal de promoção --}}
-        <x-chess.promotion-modal :promotionModal="$user['promotion']" :color="$user['color'] == 'white' ? 'white' : 'black'" />
+        <x-chess.promotion-modal :promotionModal="$user['promotion']" :color="$user['color']" />
     @else
         {{-- Esperando o oponente --}}
         <div class="flex flex-col items-center justify-center p-4 font-extrabold text-gray-700">
