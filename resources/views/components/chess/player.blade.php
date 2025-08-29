@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div class="text-xs text-center text-gray-400">Movimento 2 de 2</div>
+            <div class="text-xs text-center text-gray-400">Movimento {{ count($history) }} de {{ count($history) }}</div>
         </div>
     </div>
 </div>
