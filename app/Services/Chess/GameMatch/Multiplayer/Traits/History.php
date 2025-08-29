@@ -23,12 +23,20 @@ trait History
         $letter .= $position;
 
         $this->room->history[] = $letter;
+
+        $this->reloadRoomOnCache();
     }
 
     private function captured(string $position): string
     {
         if (Piece::pieceIsBlackOrWhite($this->room->board[$position])) {
             $this->room->user->capturedPieces[] = $this->room->board[$position];
+            if($this->selectedPiece->piece == ChessPiece::PAWN_WHITE || $this->selectedPiece->piece ==ChessPiece::PAWN_BLACK){
+                $column = preg_replace('/[0-9]/', '', $this->selectedPiece->position);
+                $column .= 'x';
+                return $column;
+            }
+
             return 'x';
         }
         return '';

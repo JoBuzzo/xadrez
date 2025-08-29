@@ -233,7 +233,8 @@ trait ChessGameMatch
             'uuid' => $this->room->uuid,
             'board' => $this->room->board,
             'turn' => $this->room->turn,
-            'users' => [$this->room->user->toArray(), $this->room->opponent->toArray()]
+            'users' => [$this->room->user->toArray(), $this->room->opponent->toArray()],
+            'history' => $this->room->history
         ];
 
         Cache::put('game-match-' . $room['uuid'], $room);

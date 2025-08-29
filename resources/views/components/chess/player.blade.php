@@ -40,25 +40,27 @@
                     class="focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1">
                     <div>
                         <div class="space-y-1">
-                            @foreach ($history as $key => $historyItem)
-                                <div class="grid items-center grid-cols-3 gap-2 text-sm">
+                            @foreach (array_chunk($history, 2) as $rowIndex => $row)
+                                <div class="grid grid-cols-3 gap-2 items-center text-sm">
                                     <span class="font-mono text-gray-400">
-                                        {{ $key + 1 }}.
+                                        {{ $rowIndex + 1 }}.
                                     </span>
-                                    <button class="px-2 py-1 font-mono text-left rounded hover:bg-gray-100">
-                                        {{ $historyItem }}
-                                    </button>
-                                    <button class="px-2 py-1 font-mono text-left rounded hover:bg-gray-100">
-                                        {{ $historyItem }}
-                                    </button>
+
+                                    <div class="col-span-2 flex gap-2">
+                                        @foreach ($row as $historyItem)
+                                            <button class="px-2 py-1 font-mono text-left rounded hover:bg-gray-100">
+                                                {{ $historyItem }}
+                                            </button>
+                                        @endforeach
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
-
                     </div>
                 </div>
             </div>
-            <div class="text-xs text-center text-gray-400">Movimento {{ count($history) }} de {{ count($history) }}</div>
+            <div class="text-xs text-center text-gray-400">Movimento {{ count($history) }} de {{ count($history) }}
+            </div>
         </div>
     </div>
 </div>

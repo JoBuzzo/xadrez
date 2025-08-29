@@ -24,15 +24,15 @@ class ChessGameMatch extends Component
 
     public function mount(): void
     {
-        try {
+        // try {
             $this->roomUuid = request()->get('room');
             $this->userUuid = request()->get('user');
             $service = new ChessGameMatchService($this->roomUuid, $this->userUuid);
 
             $this->setData($service);
-        } catch (\Throwable $th) {
+        // } catch (\Throwable $th) {
             // $this->redirect(route('rooms'), true);
-        }
+        // }
     }
 
     public function handleSquareClick(string $position, string $piece): void

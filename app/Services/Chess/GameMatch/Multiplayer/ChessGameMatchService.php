@@ -134,7 +134,7 @@ class ChessGameMatchService
 
                 $this->room->board[$this->selectedPiece->position] = $this->selectedPiece->position;
 
-                $this->handleHistory($this->selectedPiece->position);
+                $this->handleHistory($position);
 
                 $this->room->board[$position] = $this->selectedPiece->piece;
                 $this->markCastlingPiecesMoved();
