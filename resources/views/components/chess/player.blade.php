@@ -32,5 +32,33 @@
             </div>
         </div>
     </div>
+    <div class="flex flex-col gap-6 p-4 text-gray-500 bg-white border shadow-2xl rounded-xl">
+        <div class="space-y-4">
+            <h3 class="font-semibold">Histórico de Movimentos</h3>
+            <div class="relative h-64">
+                <div
+                    class="focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1">
+                    <div>
+                        <div class="space-y-1">
+                            @foreach ($history as $key => $historyItem)
+                                <div class="grid items-center grid-cols-3 gap-2 text-sm">
+                                    <span class="font-mono text-gray-400">
+                                        {{ $key + 1 }}.
+                                    </span>
+                                    <button class="px-2 py-1 font-mono text-left rounded hover:bg-gray-100">
+                                        {{ $historyItem }}
+                                    </button>
+                                    <button class="px-2 py-1 font-mono text-left rounded hover:bg-gray-100">
+                                        {{ $historyItem }}
+                                    </button>
+                                </div>
+                            @endforeach
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+            <div class="text-xs text-center text-gray-400">Movimento 2 de 2</div>
+        </div>
+    </div>
 </div>

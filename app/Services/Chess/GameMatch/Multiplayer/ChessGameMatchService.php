@@ -9,10 +9,11 @@ use App\Services\Chess\GameMatch\MatchPiecesService;
 use Illuminate\Support\Facades\Cache;
 use App\Services\Chess\Piece\Piece;
 use App\Events\MovedPiece;
+use App\Services\Chess\GameMatch\Multiplayer\Traits\History;
 
 class ChessGameMatchService
 {
-    use ChessGameMatch;
+    use ChessGameMatch, History;
 
     public function __construct(
         string $roomUuid,
@@ -130,10 +131,11 @@ class ChessGameMatchService
             $this->canSelectPiece = false;
         } else if ($turn) {
             if ($this->existsPositionInPossibilities($position)) {
+
                 $this->room->board[$this->selectedPiece->position] = $this->selectedPiece->position;
-                if(Piece::pieceIsBlackOrWhite($this->room->board[$position])){
-                    $this->room->user->capturedPieces[] = $this->room->board[$position];
-                }
+
+                $this->handleHistory($this->selectedPiece->position);
+
                 $this->room->board[$position] = $this->selectedPiece->piece;
                 $this->markCastlingPiecesMoved();
                 $this->executeCastlingMove($position);
@@ -177,7 +179,8 @@ class ChessGameMatchService
             'uuid' => $this->room->uuid,
             'board' => $this->room->board,
             'turn' => $this->room->turn,
-            'users' => [$this->room->user->toArray(), $this->room->opponent->toArray()]
+            'users' => [$this->room->user->toArray(), $this->room->opponent->toArray()],
+            'history' => $this->room->history
         ];
 
         Cache::put('game-match-' . $room['uuid'], $room);

@@ -14,6 +14,7 @@ class RoomDTO
         public ?string $turn = null,
         public array $users,
         public array $board,
+        public array $history = [],
         public ?UserDTO $user = null,
         public ?UserDTO $opponent = null
     ) {}
@@ -27,6 +28,7 @@ class RoomDTO
             users: $room['users'],
             turn: $room['turn'],
             board: $room['board'],
+            history: $room['history'] ?? [],
             user: $room['user'],
             opponent: $room['opponent']
         );
@@ -42,6 +44,7 @@ class RoomDTO
             'users' => [$user, $opponent],
             'turn' => $this->turn,
             'board' => $this->board,
+            'history' => $this->history,
             'user' => $user,
             'opponent' => $opponent
         ];
@@ -51,11 +54,12 @@ class RoomDTO
     {
         $room = Cache::get('game-match-' . $roomUuid, []);
 
-        if(!$room){
+        if (!$room) {
             throw new \Exception('Room not found');
         }
         if (count($room['users']) == 1) {
             // Caso tiver apenas um usuário, ele vai estar esperando a entrada do oponente
+            $room['history'] = [];
 
             $data = collect($room['users'])->firstWhere('uuid', $userUuid);
             $data['waitingForOpponent'] = true;
@@ -80,6 +84,8 @@ class RoomDTO
         } else if (count($room['users']) == 2) {
             // Caso tiver dois usuários, e ainda não começaram a jogar (tabuleiro vazio)
             if (!isset($room['board']) || (isset($room['board']) && $room['board'] == [])) {
+
+                $room['history'] = [];
 
                 $data = collect($room['users'])->firstWhere('uuid', $userUuid);
                 $data['waitingForOpponent'] = false;
@@ -122,7 +128,6 @@ class RoomDTO
 
                 // atualizar a página do adversário
                 event(new SecondPlayerJoined($room['uuid'], $opponent->uuid));
-
             } else {
                 //pensado em quando o usuário recarrega a página
                 $room['user'] = UserDTO::makeUser(collect($room['users'])->firstWhere('uuid', $userUuid));

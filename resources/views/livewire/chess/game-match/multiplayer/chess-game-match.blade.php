@@ -28,7 +28,7 @@
                 />
 
                 {{-- Jogador --}}
-                <x-chess.player :user="$user" />
+                <x-chess.player :user="$user" :history="$room['history']" />
 
             </div>
         </div>
