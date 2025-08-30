@@ -35,18 +35,18 @@
     <div class="flex flex-col gap-6 p-4 text-gray-500 bg-white border shadow-2xl rounded-xl">
         <div class="space-y-4">
             <h3 class="font-semibold">Histórico de Movimentos</h3>
-            <div class="relative h-64">
+            <div class="relative h-64 overflow-y-scroll">
                 <div
                     class="focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1">
                     <div>
                         <div class="space-y-1">
                             @foreach (array_chunk($history, 2) as $rowIndex => $row)
-                                <div class="grid grid-cols-3 gap-2 items-center text-sm">
+                                <div class="grid items-center grid-cols-3 gap-2 text-sm">
                                     <span class="font-mono text-gray-400">
                                         {{ $rowIndex + 1 }}.
                                     </span>
 
-                                    <div class="col-span-2 flex gap-2">
+                                    <div class="flex col-span-2 gap-2">
                                         @foreach ($row as $historyItem)
                                             <button class="px-2 py-1 font-mono text-left rounded hover:bg-gray-100">
                                                 {{ $historyItem }}
@@ -59,7 +59,8 @@
                     </div>
                 </div>
             </div>
-            <div class="text-xs text-center text-gray-400">Movimento {{ count($history) }} de {{ count($history) }}
+            <div class="text-xs text-center text-gray-400">
+                Movimento {{ count($history) }} de {{ count($history) }}
             </div>
         </div>
     </div>

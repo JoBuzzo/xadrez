@@ -3,42 +3,83 @@
 namespace App\Services\Chess\GameMatch\Multiplayer\Traits;
 
 use App\Enums\ChessPiece;
+use App\Services\Chess\GameMatch\MatchPiecesService;
 use App\Services\Chess\Piece\Piece;
 
 trait History
 {
-    public function handleHistory(string $position)
+    public function handleHistory(string $targetPosition): void
     {
-        $letter = match ($this->selectedPiece->piece) {
+        $pieceLetter = match ($this->selectedPiece->piece) {
             ChessPiece::PAWN_WHITE, ChessPiece::PAWN_BLACK => '',
-            ChessPiece::ROOK_WHITE, ChessPiece::ROOK_BLACK => 'R',
-            ChessPiece::KNIGHT_WHITE, ChessPiece::KNIGHT_BLACK => 'N',
-            ChessPiece::BISHOP_WHITE, ChessPiece::BISHOP_BLACK => 'B',
+            ChessPiece::ROOK_WHITE,  ChessPiece::ROOK_BLACK  => 'R',
+            ChessPiece::KNIGHT_WHITE,ChessPiece::KNIGHT_BLACK=> 'N',
+            ChessPiece::BISHOP_WHITE,ChessPiece::BISHOP_BLACK=> 'B',
             ChessPiece::QUEEN_WHITE, ChessPiece::QUEEN_BLACK => 'Q',
-            ChessPiece::KING_WHITE, ChessPiece::KING_BLACK => 'K',
+            ChessPiece::KING_WHITE,  ChessPiece::KING_BLACK  => 'K',
         };
 
-        $letter .= $this->captured($position);
+        $isCapture = Piece::pieceIsBlackOrWhite($this->room->board[$targetPosition]);
 
-        $letter .= $position;
+        if ($isCapture) {
+            $this->room->user->capturedPieces[] = $this->room->board[$targetPosition];
 
-        $this->room->history[] = $letter;
+            if ($pieceLetter === '') {
+                $col = preg_replace('/[0-9]/', '', $this->selectedPiece->position);
+                $notation = $col . 'x' . $targetPosition;
+            } else {
+                $disamb = $this->checkIfHasAmbiguity($targetPosition);
+                $notation = $pieceLetter . $disamb . 'x' . $targetPosition;
+            }
+        } else {
+            if ($pieceLetter === '') {
+                $notation = $targetPosition;
+            } else {
+                $disamb = $this->checkIfHasAmbiguity($targetPosition);
+                $notation = $pieceLetter . $disamb . $targetPosition;
+            }
+        }
 
+        $this->room->history[] = $notation;
         $this->reloadRoomOnCache();
     }
 
-    private function captured(string $position): string
+    private function checkIfHasAmbiguity(string $targetPosition): string
     {
-        if (Piece::pieceIsBlackOrWhite($this->room->board[$position])) {
-            $this->room->user->capturedPieces[] = $this->room->board[$position];
-            if($this->selectedPiece->piece == ChessPiece::PAWN_WHITE || $this->selectedPiece->piece ==ChessPiece::PAWN_BLACK){
-                $column = preg_replace('/[0-9]/', '', $this->selectedPiece->position);
-                $column .= 'x';
-                return $column;
-            }
+        $conflictingPieces = [];
 
-            return 'x';
+        foreach ($this->room->board as $pos => $occupant) {
+            if ($this->selectedPiece->piece == $occupant && $pos != $this->selectedPiece->position) {
+                $possibilities = MatchPiecesService::matchPieces(
+                    $this->room->board,
+                    $pos,
+                    $occupant
+                );
+
+                if (in_array($targetPosition, $possibilities)) {
+                    $conflictingPieces[] = $pos;
+                }
+            }
         }
+
+        if (empty($conflictingPieces)) {
+            return '';
+        }
+
+        $col = preg_replace('/[0-9]/', '', $this->selectedPiece->position);
+        $row = preg_replace('/[a-h]/', '', $this->selectedPiece->position);
+
+        foreach ($conflictingPieces as $conflict) {
+            $conflictCol = preg_replace('/[0-9]/', '', $conflict);
+            $conflictRow = preg_replace('/[a-h]/', '', $conflict);
+
+            if ($conflictCol !== $col) {
+                return $col;
+            } elseif ($conflictRow !== $row) {
+                return $row;
+            }
+        }
+
         return '';
     }
 }
